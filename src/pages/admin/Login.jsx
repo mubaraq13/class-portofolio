@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { Lock, Mail, ArrowLeft, ShieldCheck, AlertCircle } from 'lucide-react';
-import { Turnstile } from '@marsidev/react-turnstile'; // <-- Import Cloudflare Turnstile
+import { Turnstile } from '@marsidev/react-turnstile';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -115,11 +115,7 @@ export default function Login() {
             {/* WIDGET CLOUDFLARE TURNSTILE */}
             <div className="pt-2 flex justify-center">
               <Turnstile 
-                /* Ini adalah Site Key Testing (Dummy) agar kodingan lu tidak error.
-                  Untuk web asli, daftar di dash.cloudflare.com -> Turnstile -> Add Site
-                  Lalu ganti string di bawah dengan Site Key milik lu sendiri.
-                */
-                siteKey="1x00000000000000000000AA" 
+                siteKey="0x4AAAAAAAEjrAb8PmXs9vlhf" 
                 onSuccess={(token) => {
                   console.log("Cloudflare Verified!", token);
                   setIsVerified(true);
