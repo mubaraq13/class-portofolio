@@ -27,7 +27,6 @@ export default function App() {
   return (
     <Router>
       {/* === FIX BACKGROUND MOBILE (ANTI LOMPAT) === */}
-      {/* Dipaku di atas (top-0) dengan tinggi 120vh agar mengabaikan pergerakan Address Bar HP */}
       <div className="fixed top-0 left-0 w-full h-[120vh] -z-20 pointer-events-none">
         <div 
           className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
@@ -37,8 +36,8 @@ export default function App() {
         <div className="absolute top-0 left-0 w-full h-full bg-navy-900/70 backdrop-blur-[4px]"></div>
       </div>
 
-      {/* === KONTEN UTAMA YANG BISA DI-SCROLL === */}
-      <div className="relative min-h-screen text-white overflow-x-hidden flex flex-col">
+      {/* === KONTEN UTAMA (Perbaikan: Hapus text-white agar tulisan di card putih tetap terlihat) === */}
+      <div className="relative min-h-screen overflow-x-hidden flex flex-col">
         <Navbar />
         
         <div className="flex-grow">
