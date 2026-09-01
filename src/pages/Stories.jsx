@@ -19,7 +19,29 @@ export default function Stories() {
   });
 
   useEffect(() => { 
+    // 1. Tarik data cerita pertama kali saat halaman dibuka
     fetchStories(); 
+
+    // 2. PASANG RADAR REALTIME SUPABASE 🚀
+    const radar = supabase
+      .channel('custom-stories-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'stories' }, // Pantau tabel 'stories'
+        (payload) => {
+          console.log('Ada cerita/bab baru masuk!', payload);
+          // 3. Langsung tarik data cerita baru tanpa refresh!
+          fetchStories();
+          // Opsional: Langsung balik ke bab terbaru (index 0)
+          setCurrentIndex(0); 
+        }
+      )
+      .subscribe();
+
+    // 4. Matikan radar saat pindah halaman biar enteng
+    return () => {
+      supabase.removeChannel(radar);
+    };
   }, []);
 
   const fetchStories = async () => {
@@ -56,8 +78,10 @@ export default function Stories() {
       
       setFormData({ title: '', author: '', content: '' });
       alert("Bab cerita baru berhasil dijilid ke dalam buku kelas! 📖");
-      fetchStories();
-      setCurrentIndex(0); // Otomatis geser ke halaman pertama (cerita terbaru)
+      
+      // Catatan: fetchStories() dan setCurrentIndex(0) sudah dihapus dari sini 
+      // karena sudah otomatis diurus sama Radar Realtime di atas!
+      
     } catch (error) { 
       alert("Gagal menyimpan cerita: " + error.message); 
     } finally { 

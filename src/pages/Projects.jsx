@@ -11,6 +11,7 @@ export default function Projects() {
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
+    // Fungsi untuk menarik data dari database
     const fetchProjects = async () => {
       try {
         const { data, error } = await supabase
@@ -27,7 +28,27 @@ export default function Projects() {
       }
     };
 
+    // 1. Tarik data pertama kali saat halaman dibuka
     fetchProjects();
+
+    // 2. PASANG RADAR REALTIME SUPABASE 🚀
+    const radar = supabase
+      .channel('custom-projects-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'projects' }, // Fokus mantau tabel 'projects'
+        (payload) => {
+          console.log('Ada karya/project baru nih!', payload);
+          // 3. Kalau ada data baru, langsung update tampilannya!
+          fetchProjects(); 
+        }
+      )
+      .subscribe();
+
+    // 4. Matikan radar saat user pindah halaman agar HP/Laptop tidak berat
+    return () => {
+      supabase.removeChannel(radar);
+    };
   }, []);
 
   // Fungsi pintar mendeteksi ekstensi video

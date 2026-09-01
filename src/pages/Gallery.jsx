@@ -11,6 +11,7 @@ export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState(null); 
 
   useEffect(() => {
+    // Fungsi untuk menarik data dari database
     const fetchGallery = async () => {
       try {
         const { data, error } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
@@ -22,7 +23,28 @@ export default function Gallery() {
         setLoading(false);
       }
     };
+
+    // 1. Tarik data pertama kali saat halaman dibuka
     fetchGallery();
+
+    // 2. PASANG RADAR REALTIME SUPABASE 🚀
+    const radar = supabase
+      .channel('custom-gallery-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'gallery' }, // Fokus mantau tabel 'gallery'
+        (payload) => {
+          console.log('Ada foto/video baru nih di galeri!', payload);
+          // 3. Kalau ada data baru/dihapus/diedit, langsung update tampilannya!
+          fetchGallery(); 
+        }
+      )
+      .subscribe();
+
+    // 4. Matikan radar saat user pindah halaman agar HP/Laptop tidak berat
+    return () => {
+      supabase.removeChannel(radar);
+    };
   }, []);
 
   // Helper cek file video

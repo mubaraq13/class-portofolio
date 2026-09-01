@@ -20,7 +20,7 @@ export default function Timeline() {
         const { data, error } = await supabase
           .from('timeline')
           .select('*')
-          .order('date', { ascending: true }); // Diurut kronologis biar dibaca kayak buku sejarah
+          .order('event_date', { ascending: true }); // Pastikan kolom urutannya bener, asumsiku 'event_date' sesuai ManageTimeline
 
         if (error) throw error;
         if (data) setTimeline(data);
@@ -31,7 +31,27 @@ export default function Timeline() {
       }
     };
 
+    // 1. Tarik data saat pertama kali buka
     fetchTimeline();
+
+    // 2. PASANG RADAR REALTIME SUPABASE 🚀
+    const radar = supabase
+      .channel('custom-timeline-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'timeline' }, // Pantau tabel 'timeline'
+        (payload) => {
+          console.log('Ada sejarah baru di timeline!', payload);
+          // 3. Tarik data baru otomatis kalau ada perubahan
+          fetchTimeline();
+        }
+      )
+      .subscribe();
+
+    // 4. Bersihin radar waktu pindah halaman
+    return () => {
+      supabase.removeChannel(radar);
+    };
   }, []);
 
   const isVideoFile = (url) => {
@@ -113,7 +133,7 @@ export default function Timeline() {
                 <div className="w-full md:w-1/2 space-y-6 md:pr-6">
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-50 text-cyan-700 rounded-full text-xs font-bold border border-cyan-200 shadow-sm">
-                      <Calendar size={14} /> {formatDate(currentItem.date)}
+                      <Calendar size={14} /> {formatDate(currentItem.event_date)}
                     </span>
                     <span className="text-xs font-bold text-slate-400 tracking-widest uppercase">
                       Lembar {currentIndex + 1} dari {timeline.length}

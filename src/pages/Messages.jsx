@@ -18,7 +18,29 @@ export default function Messages() {
   });
 
   useEffect(() => {
+    // 1. Tarik data pertama kali saat halaman dibuka
     fetchMessages();
+
+    // 2. PASANG RADAR REALTIME SUPABASE 🚀
+    const radar = supabase
+      .channel('custom-messages-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'messages' }, // Pantau tabel 'messages'
+        (payload) => {
+          console.log('Ada pesan baru masuk!', payload);
+          // 3. Langsung tarik pesan baru tanpa refresh!
+          fetchMessages();
+          // Opsional: Langsung balik ke halaman 1 (index 0) biar pesan barunya kelihatan
+          setCurrentIndex(0); 
+        }
+      )
+      .subscribe();
+
+    // 4. Matikan radar saat pindah halaman biar enteng
+    return () => {
+      supabase.removeChannel(radar);
+    };
   }, []);
 
   const fetchMessages = async () => {
@@ -54,8 +76,9 @@ export default function Messages() {
       
       setFormData({ name: '', message: '' });
       alert("Yeay! Pesanmu berhasil dijilid ke buku tamu! 🚀");
-      fetchMessages();
-      setCurrentIndex(0); // Otomatis kembali ke lembar pertama (pesan terbaru)
+      
+      // Catatan: fetchMessages() dan setCurrentIndex(0) sudah dihapus dari sini 
+      // karena sudah di-handle otomatis oleh Radar Realtime di atas!
       
     } catch (error) {
       alert("Gagal menyimpan pesan: " + error.message);

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom'; 
 import { supabase } from '../lib/supabase';
-import { Users, X, MousePointerClick, AtSign } from 'lucide-react'; // <-- Diganti ke AtSign (@) biar aman 100%
+import { Users, X, MousePointerClick, AtSign } from 'lucide-react'; 
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Members() {
@@ -14,6 +14,7 @@ export default function Members() {
   const [isPhotoFlipped, setIsPhotoFlipped] = useState(false);
 
   useEffect(() => {
+    // Fungsi tarik data
     const fetchMembers = async () => {
       try {
         const { data, error } = await supabase
@@ -29,7 +30,28 @@ export default function Members() {
         setLoading(false);
       }
     };
+
+    // 1. Tarik data pas halaman pertama kali dibuka
     fetchMembers();
+
+    // 2. PASANG RADAR REALTIME SUPABASE 🚀
+    const radar = supabase
+      .channel('custom-members-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'members' }, // Fokus mantau tabel 'members'
+        (payload) => {
+          console.log('Ada perubahan data anggota kelas!', payload);
+          // 3. Langsung update tampilan tanpa refresh!
+          fetchMembers(); 
+        }
+      )
+      .subscribe();
+
+    // 4. Matikan radar saat pindah halaman biar enteng
+    return () => {
+      supabase.removeChannel(radar);
+    };
   }, []);
 
   // Kunci scroll saat modal terbuka
