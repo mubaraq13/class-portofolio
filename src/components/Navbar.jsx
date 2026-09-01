@@ -2,12 +2,13 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LogIn, Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  // Sembunyikan Navbar publik jika admin sedang berada di halaman Dasbor Admin
+  // Sembunyikan Navbar publik jika sedang berada di halaman Dasbor Admin
   if (location.pathname.startsWith('/admin')) return null;
 
   // Daftar Menu Publik
@@ -18,8 +19,8 @@ export default function Navbar() {
     { name: 'Projects', path: '/projects' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Timeline', path: '/timeline' },
-    { name: 'Messages', path: '/messages' }, // <-- Menu Baru!
-    { name: 'Stories', path: '/stories' },   // <-- Menu Baru!
+    { name: 'Messages', path: '/messages' },
+    { name: 'Stories', path: '/stories' },
   ];
 
   return (
@@ -28,7 +29,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-20">
           
           {/* LOGO */}
-          <Link to="/" className="flex items-center gap-1">
+          <Link to="/" className="flex items-center gap-1 z-50">
             <span className="text-xl font-black text-white tracking-widest">CLASS</span>
             <span className="text-xl font-black text-cyan-400 tracking-widest">PORTFOLIO</span>
           </Link>
@@ -58,10 +59,11 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* MOBILE MENU BUTTON (Ikon Hamburger untuk layar HP) */}
+          {/* MOBILE MENU BUTTON (Hamburger) */}
           <button 
-            className="lg:hidden text-slate-300 hover:text-white"
+            className="lg:hidden text-slate-300 hover:text-white z-50 transition-transform"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle Menu"
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -69,34 +71,44 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* MOBILE MENU DROPDOWN (Tampil jika ikon Hamburger diklik) */}
-      {isOpen && (
-        <div className="lg:hidden bg-navy-900 border-t border-white/10 px-6 py-4 space-y-4 shadow-2xl">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.name} 
-              to={link.path}
-              onClick={() => setIsOpen(false)} // Otomatis tutup menu saat diklik
-              className={`block text-sm font-bold ${
-                location.pathname === link.path 
-                  ? 'text-cyan-400' 
-                  : 'text-slate-300 hover:text-white'
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <div className="pt-4 border-t border-white/10">
-            <Link 
-              to="/admin/login"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white text-sm font-bold transition-colors"
-            >
-              <LogIn size={16} className="text-cyan-400" /> Admin Panel
-            </Link>
-          </div>
-        </div>
-      )}
+      {/* MOBILE MENU DROPDOWN (Dengan Animasi Framer Motion) */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden bg-navy-900 border-t border-white/10 overflow-hidden shadow-2xl absolute w-full"
+          >
+            <div className="px-6 py-4 space-y-4">
+              {navLinks.map((link) => (
+                <Link 
+                  key={link.name} 
+                  to={link.path}
+                  onClick={() => setIsOpen(false)} // Otomatis tutup menu saat diklik
+                  className={`block text-sm font-bold ${
+                    location.pathname === link.path 
+                      ? 'text-cyan-400' 
+                      : 'text-slate-300 hover:text-white'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <div className="pt-4 border-t border-white/10">
+                <Link 
+                  to="/admin/login"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white text-sm font-bold transition-colors"
+                >
+                  <LogIn size={16} className="text-cyan-400" /> Admin Panel
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

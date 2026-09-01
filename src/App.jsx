@@ -1,6 +1,7 @@
 // src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import AdminLayout from './components/AdminLayout';
 
 // Public Pages
 import Home from './pages/Home';
@@ -25,8 +26,7 @@ import ManageStories from './pages/admin/ManageStories';
 export default function App() {
   return (
     <Router>
-      {/* 
-        === UI/UX: GLOBAL BACKGROUND WRAPPER === 
+      {/* === UI/UX: GLOBAL BACKGROUND WRAPPER === 
         Foto diset fixed agar tidak ikut ter-scroll
       */}
       <div 
@@ -49,15 +49,19 @@ export default function App() {
             <Route path="/messages" element={<Messages />} />
             <Route path="/stories" element={<Stories />} />
 
-            {/* ADMIN ROUTES */}
+            {/* ADMIN LOGIN (Berdiri sendiri karena tidak butuh sidebar admin) */}
             <Route path="/admin/login" element={<Login />} />
-            <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route path="/admin/members" element={<ManageMembers />} />
-            <Route path="/admin/projects" element={<ManageProjects />} />
-            <Route path="/admin/gallery" element={<ManageGallery />} />
-            <Route path="/admin/timeline" element={<ManageTimeline />} />
-            <Route path="/admin/messages" element={<ManageMessages />} />
-            <Route path="/admin/stories" element={<ManageStories />} />
+
+            {/* ADMIN ROUTES (Dibungkus dengan AdminLayout) */}
+            <Route element={<AdminLayout />}>
+              <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/admin/members" element={<ManageMembers />} />
+              <Route path="/admin/projects" element={<ManageProjects />} />
+              <Route path="/admin/gallery" element={<ManageGallery />} />
+              <Route path="/admin/timeline" element={<ManageTimeline />} />
+              <Route path="/admin/messages" element={<ManageMessages />} />
+              <Route path="/admin/stories" element={<ManageStories />} />
+            </Route>
           </Routes>
 
         </div>

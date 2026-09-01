@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { uploadImage } from '../../lib/storage';
-import { LogOut, Home, Plus, Trash2, Image as ImageIcon, Edit } from 'lucide-react'; // Tambah icon Edit
+import { Plus, Trash2, Image as ImageIcon, Edit, ArrowLeft, AtSign } from 'lucide-react'; 
 import ImageModal from '../../components/ImageModal';
 
 export default function ManageMembers() {
@@ -15,15 +15,17 @@ export default function ManageMembers() {
   const [isAdding, setIsAdding] = useState(false);
   const [uploading, setUploading] = useState(false);
   
-  // State untuk mode Edit
   const [editingId, setEditingId] = useState(null);
   
   const [formData, setFormData] = useState({
     full_name: '',
     role: 'Siswa',
     bio: '',
+    instagram: '', 
     photo: null,
-    existing_photo_url: '' // Untuk menyimpan URL foto lama saat edit
+    existing_photo_url: '',
+    photo_2: null, 
+    existing_photo_url_2: '' 
   });
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -53,33 +55,28 @@ export default function ManageMembers() {
     }
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate('/admin/login');
-  };
-
-  // FUNGSI MEMBUKA FORM EDIT
   const handleEditClick = (member) => {
     setEditingId(member.id);
     setFormData({
       full_name: member.full_name,
       role: member.role,
       bio: member.bio || '',
-      photo: null, // Kosongkan file input
-      existing_photo_url: member.photo_url || '' // Simpan foto lama
+      instagram: member.instagram || '',
+      photo: null, 
+      existing_photo_url: member.photo_url || '',
+      photo_2: null,
+      existing_photo_url_2: member.photo_url_2 || '' 
     });
     setIsAdding(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll otomatis ke atas
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // FUNGSI MEMBATALKAN FORM
   const handleCancel = () => {
     setIsAdding(false);
     setEditingId(null);
-    setFormData({ full_name: '', role: 'Siswa', bio: '', photo: null, existing_photo_url: '' });
+    setFormData({ full_name: '', role: 'Siswa', bio: '', instagram: '', photo: null, existing_photo_url: '', photo_2: null, existing_photo_url_2: '' });
   };
 
-  // FUNGSI SUBMIT (Bisa untuk Tambah Baru / Update Data)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!classId) return alert("ID Kelas belum ada!");
@@ -87,44 +84,37 @@ export default function ManageMembers() {
     setUploading(true);
     try {
       let photoUrl = editingId ? formData.existing_photo_url : ''; 
+      let photoUrl2 = editingId ? formData.existing_photo_url_2 : ''; 
 
-      // Jika user memilih file foto baru, upload ke Storage
       if (formData.photo) {
         photoUrl = await uploadImage(formData.photo, 'member-photos');
       }
 
-      if (editingId) {
-        // MODE UPDATE DATA
-        const { error } = await supabase
-          .from('members')
-          .update({
-            full_name: formData.full_name,
-            role: formData.role,
-            bio: formData.bio,
-            photo_url: photoUrl
-          })
-          .eq('id', editingId);
+      if (formData.photo_2) {
+        photoUrl2 = await uploadImage(formData.photo_2, 'member-photos');
+      }
 
+      const payload = {
+        full_name: formData.full_name,
+        role: formData.role,
+        bio: formData.bio,
+        instagram: formData.instagram, 
+        photo_url: photoUrl,
+        photo_url_2: photoUrl2 
+      };
+
+      if (editingId) {
+        const { error } = await supabase.from('members').update(payload).eq('id', editingId);
         if (error) throw error;
         alert("Data member berhasil diperbarui! ✨");
       } else {
-        // MODE TAMBAH DATA BARU
-        const { error } = await supabase.from('members').insert([
-          {
-            class_id: classId,
-            full_name: formData.full_name,
-            role: formData.role,
-            bio: formData.bio,
-            photo_url: photoUrl
-          }
-        ]);
-
+        const { error } = await supabase.from('members').insert([{ class_id: classId, ...payload }]);
         if (error) throw error;
         alert("Member berhasil ditambahkan! 🎉");
       }
 
-      handleCancel(); // Reset form & tutup
-      checkSessionAndFetchData(); // Refresh data tabel
+      handleCancel(); 
+      checkSessionAndFetchData();
 
     } catch (error) {
       alert("Gagal menyimpan data: " + error.message);
@@ -149,62 +139,48 @@ export default function ManageMembers() {
   if (loading) return <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div></div>;
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
-      {/* SIDEBAR */}
-      <aside className="w-64 bg-navy-900 text-white hidden md:flex flex-col">
-        <div className="p-6 border-b border-white/10">
-          <h2 className="text-2xl font-bold text-cyan-400 tracking-wider">ADMIN PANEL</h2>
-        </div>
-        <nav className="flex-1 px-4 py-6 space-y-2">
-          <Link to="/admin/dashboard" className="block px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-xl transition-colors">Dashboard</Link>
-          <Link to="/admin/members" className="block px-4 py-3 bg-white/10 text-cyan-400 rounded-xl font-medium">Manage Members</Link>
-          <Link to="/admin/projects" className="block px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-xl transition-colors">Manage Projects</Link>
-          <Link to="/admin/gallery" className="block px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-xl transition-colors">Manage Gallery</Link>
-          <Link to="/admin/timeline" className="block px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-xl transition-colors">Manage Timeline</Link>
-          <Link to="/admin/messages" className="block px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-xl transition-colors">Manage Messages</Link>
-          <Link to="/admin/stories" className="block px-4 py-3 text-slate-300 hover:bg-white/5 hover:text-white rounded-xl transition-colors">Manage Stories</Link>
-        </nav>
-        <div className="p-4 border-t border-white/10 space-y-2">
-          <Link to="/" className="flex items-center gap-3 px-4 py-2 text-slate-300 hover:text-white transition-colors">
-            <Home size={18} /> View Website
-          </Link>
-          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-2 text-red-400 hover:bg-red-400/10 hover:text-red-300 rounded-xl transition-colors">
-            <LogOut size={18} /> Sign Out
-          </button>
-        </div>
-      </aside>
+    <div className="p-6 md:p-10">
+      
+      {/* TOMBOL KEMBALI */}
+      <div className="mb-6">
+        <Link 
+          to="/admin/dashboard" 
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm hover:bg-slate-100 font-semibold text-sm transition-all"
+        >
+          <ArrowLeft size={18} /> Kembali ke Dashboard
+        </Link>
+      </div>
 
-      {/* MAIN CONTENT */}
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-navy-900">Manage Members</h1>
-            <p className="text-slate-500">Atur anggota kelas dan pengurus inti.</p>
-          </div>
-          <button 
-            onClick={isAdding ? handleCancel : () => setIsAdding(true)}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold transition-colors shadow-lg ${
-              isAdding ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' : 'bg-cyan-500 text-navy-900 hover:bg-cyan-400'
-            }`}
-          >
-            {isAdding ? "Batal" : <><Plus size={20} /> Add Member</>}
-          </button>
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-navy-900">Manage Members</h1>
+          <p className="text-slate-500">Atur anggota kelas dan pengurus inti.</p>
         </div>
+        <button 
+          onClick={isAdding ? handleCancel : () => setIsAdding(true)}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold transition-colors shadow-lg ${
+            isAdding ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' : 'bg-cyan-500 text-navy-900 hover:bg-cyan-400'
+          }`}
+        >
+          {isAdding ? "Batal" : <><Plus size={20} /> Add Member</>}
+        </button>
+      </div>
 
-        {/* FORM TAMBAH / EDIT MEMBER */}
-        {isAdding && (
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-cyan-200 mb-8 animate-in fade-in slide-in-from-top-4">
-            <h2 className="text-xl font-bold text-navy-900 mb-4">
-              {editingId ? "Edit Data Anggota" : "Tambah Anggota Baru"}
-            </h2>
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* FORM TAMBAH / EDIT MEMBER */}
+      {isAdding && (
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-cyan-200 mb-8 animate-in fade-in slide-in-from-top-4">
+          <h2 className="text-xl font-bold text-navy-900 mb-4">
+            {editingId ? "Edit Data Anggota" : "Tambah Anggota Baru"}
+          </h2>
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-1">Nama Lengkap</label>
+                <input type="text" required value={formData.full_name} onChange={(e) => setFormData({...formData, full_name: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 outline-none" placeholder="Masukkan nama..." />
+              </div>
               
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1">Nama Lengkap</label>
-                  <input type="text" required value={formData.full_name} onChange={(e) => setFormData({...formData, full_name: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 outline-none" placeholder="Masukkan nama..." />
-                </div>
-                
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1">Jabatan / Role</label>
                   <select value={formData.role} onChange={(e) => setFormData({...formData, role: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 outline-none">
@@ -215,54 +191,152 @@ export default function ManageMembers() {
                     <option value="Bendahara">Bendahara</option>
                   </select>
                 </div>
-                
+
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1">Bio Singkat</label>
-                  <textarea value={formData.bio} onChange={(e) => setFormData({...formData, bio: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 outline-none" rows="2" placeholder="Kata-kata mutiara..."></textarea>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">Instagram <span className="font-normal text-cyan-500">(Opsional)</span></label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <AtSign size={16} className="text-slate-400" />
+                    </div>
+                    <input 
+                      type="text" 
+                      value={formData.instagram} 
+                      onChange={(e) => setFormData({...formData, instagram: e.target.value})} 
+                      className="w-full pl-9 p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 outline-none" 
+                      placeholder="tanpa @, cth: rizal" 
+                    />
+                  </div>
                 </div>
               </div>
-
+              
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  Foto Profil {editingId && <span className="text-cyan-500 font-normal">(Opsional: biarkan kosong jika tidak diganti)</span>}
-                </label>
-                <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center h-full flex flex-col justify-center items-center hover:border-cyan-500 transition-colors relative overflow-hidden">
+                <label className="block text-sm font-semibold text-slate-700 mb-1">Bio Singkat</label>
+                <textarea value={formData.bio} onChange={(e) => setFormData({...formData, bio: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 outline-none" rows="2" placeholder="Kata-kata mutiara..."></textarea>
+              </div>
+            </div>
+
+            {/* INPUT DUA FOTO BERDAMPINGAN DENGAN FITUR HAPUS FOTO */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              {/* Foto Utama */}
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-1 text-center">Foto Utama (Formal)</label>
+                <div className="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center h-48 flex flex-col justify-center items-center hover:border-cyan-500 transition-colors relative overflow-hidden group">
                   
-                  {/* Tampilkan preview foto lama jika sedang edit dan belum pilih file baru */}
-                  {editingId && formData.existing_photo_url && !formData.photo && (
-                    <div className="absolute inset-0 opacity-20">
+                  {/* Tampilkan preview foto lama */}
+                  {formData.existing_photo_url && !formData.photo && (
+                    <div className="absolute inset-0 opacity-40">
                       <img src={formData.existing_photo_url} alt="old-pic" className="w-full h-full object-cover" />
                     </div>
                   )}
 
-                  <div className="relative z-10 flex flex-col items-center">
-                    <ImageIcon size={40} className="text-slate-400 mb-2" />
-                    <input type="file" accept="image/png, image/jpeg, image/jpg, image/webp" onChange={(e) => setFormData({...formData, photo: e.target.files[0]})} className="text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:bg-cyan-50 file:text-cyan-700 cursor-pointer" />
+                  <div className="relative z-10 flex flex-col items-center w-full px-2">
+                    <ImageIcon size={30} className="text-slate-400 mb-2" />
+                    <input 
+                      id="upload-photo-1"
+                      type="file" 
+                      accept="image/*" 
+                      onChange={(e) => setFormData({...formData, photo: e.target.files[0]})} 
+                      className="text-xs text-slate-500 w-full cursor-pointer ml-6" 
+                    />
+                    {/* Text file baru jika dipilih */}
+                    {formData.photo && (
+                      <span className="text-xs text-cyan-700 font-bold mt-2 bg-cyan-50 px-2 py-1 rounded truncate max-w-full">
+                        File: {formData.photo.name}
+                      </span>
+                    )}
                   </div>
+
+                  {/* TOMBOL HAPUS FOTO UTAMA */}
+                  {(formData.existing_photo_url || formData.photo) && (
+                    <button 
+                      type="button" 
+                      title="Hapus Foto Ini"
+                      onClick={() => {
+                        document.getElementById('upload-photo-1').value = '';
+                        setFormData({...formData, photo: null, existing_photo_url: ''});
+                      }} 
+                      className="absolute top-2 right-2 z-20 bg-red-500 text-white p-1.5 rounded-full hover:bg-red-600 transition-all shadow-md opacity-80 hover:opacity-100"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  )}
                 </div>
               </div>
 
-              <div className="md:col-span-2 flex justify-end gap-3">
-                <button type="button" onClick={handleCancel} className="px-6 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition-colors">
-                  Batal
-                </button>
-                <button type="submit" disabled={uploading} className="bg-navy-900 text-cyan-400 px-8 py-3 rounded-xl font-bold hover:bg-navy-800 disabled:opacity-50 transition-colors">
-                  {uploading ? "Menyimpan..." : (editingId ? "Update Member" : "Simpan Member")}
-                </button>
+              {/* Foto Kedua */}
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-1 text-center">Foto Kedua (Bebas)</label>
+                <div className="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center h-48 flex flex-col justify-center items-center hover:border-cyan-500 transition-colors relative overflow-hidden group">
+                  
+                  {/* Tampilkan preview foto lama */}
+                  {formData.existing_photo_url_2 && !formData.photo_2 && (
+                    <div className="absolute inset-0 opacity-40">
+                      <img src={formData.existing_photo_url_2} alt="old-pic-2" className="w-full h-full object-cover" />
+                    </div>
+                  )}
+
+                  <div className="relative z-10 flex flex-col items-center w-full px-2">
+                    <ImageIcon size={30} className="text-slate-400 mb-2" />
+                    <input 
+                      id="upload-photo-2"
+                      type="file" 
+                      accept="image/*" 
+                      onChange={(e) => setFormData({...formData, photo_2: e.target.files[0]})} 
+                      className="text-xs text-slate-500 w-full cursor-pointer ml-6" 
+                    />
+                    {/* Text file baru jika dipilih */}
+                    {formData.photo_2 && (
+                      <span className="text-xs text-cyan-700 font-bold mt-2 bg-cyan-50 px-2 py-1 rounded truncate max-w-full">
+                        File: {formData.photo_2.name}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* TOMBOL HAPUS FOTO KEDUA */}
+                  {(formData.existing_photo_url_2 || formData.photo_2) && (
+                    <button 
+                      type="button" 
+                      title="Hapus Foto Ini"
+                      onClick={() => {
+                        document.getElementById('upload-photo-2').value = '';
+                        setFormData({...formData, photo_2: null, existing_photo_url_2: ''});
+                      }} 
+                      className="absolute top-2 right-2 z-20 bg-red-500 text-white p-1.5 rounded-full hover:bg-red-600 transition-all shadow-md opacity-80 hover:opacity-100"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  )}
+                </div>
               </div>
 
-            </form>
-          </div>
-        )}
+            </div>
 
-        {/* TABEL DAFTAR MEMBER */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-          <table className="w-full text-left border-collapse">
+            <div className="md:col-span-2 flex justify-end gap-3">
+              <button type="button" onClick={handleCancel} className="px-6 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition-colors">
+                Batal
+              </button>
+              <button type="submit" disabled={uploading} className="bg-navy-900 text-cyan-400 px-8 py-3 rounded-xl font-bold hover:bg-navy-800 disabled:opacity-50 transition-colors">
+                {uploading ? "Menyimpan..." : (editingId ? "Update Member" : "Simpan Member")}
+              </button>
+            </div>
+
+          </form>
+        </div>
+      )}
+
+      {/* TABEL DAFTAR MEMBER (DENGAN HORIZONTAL SCROLL) */}
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        
+        {/* WRAPPER OVERFLOW UNTUK MOBILE */}
+        <div className="overflow-x-auto w-full">
+          {/* TABEL DIBERI MINIMAL LEBAR (min-w-[700px]) AGAR BISA DI-SCROLL */}
+          <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
               <tr className="bg-slate-50 text-slate-500 text-sm border-b border-slate-100">
                 <th className="p-4 font-semibold">Profil</th>
                 <th className="p-4 font-semibold">Jabatan</th>
-                <th className="p-4 font-semibold hidden md:table-cell">Bio</th>
+                <th className="p-4 font-semibold hidden md:table-cell">Bio & Sosmed</th>
                 <th className="p-4 font-semibold text-center w-24">Aksi</th>
               </tr>
             </thead>
@@ -273,14 +347,17 @@ export default function ManageMembers() {
                 members.map((member) => (
                   <tr key={member.id} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
                     <td className="p-4 flex items-center gap-4">
-                      <img 
-                        src={member.photo_url || 'https://via.placeholder.com/150'} 
-                        alt="Profile" 
-                        className="w-12 h-12 rounded-full object-cover border border-slate-200 cursor-pointer hover:opacity-80 transition-opacity"
-                        onClick={() => {
-                          if(member.photo_url) setSelectedImage(member.photo_url);
-                        }}
-                      />
+                      <div className="relative group cursor-pointer" onClick={() => { if(member.photo_url) setSelectedImage(member.photo_url); }}>
+                        <img 
+                          src={member.photo_url || 'https://via.placeholder.com/150'} 
+                          alt="Profile" 
+                          className="w-12 h-12 rounded-full object-cover border border-slate-200"
+                        />
+                        {/* Jika punya foto ke-2, tampilkan indikator kecil */}
+                        {member.photo_url_2 && (
+                          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-cyan-500 rounded-full border-2 border-white" title="Punya 2 Foto"></div>
+                        )}
+                      </div>
                       <span className="font-bold text-navy-900">{member.full_name}</span>
                     </td>
                     <td className="p-4">
@@ -288,7 +365,14 @@ export default function ManageMembers() {
                         {member.role}
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-slate-500 truncate max-w-xs hidden md:table-cell">{member.bio || '-'}</td>
+                    <td className="p-4 text-sm text-slate-500 hidden md:table-cell">
+                      <div className="truncate max-w-xs">{member.bio || '-'}</div>
+                      {member.instagram && (
+                        <div className="text-xs text-cyan-600 mt-1 flex items-center gap-1">
+                          <AtSign size={12} /> @{member.instagram}
+                        </div>
+                      )}
+                    </td>
                     
                     {/* KOLOM AKSI (EDIT & HAPUS) */}
                     <td className="p-4 text-center">
@@ -316,10 +400,10 @@ export default function ManageMembers() {
           </table>
         </div>
 
-        {/* Komponen Modal Gambar */}
-        <ImageModal imageUrl={selectedImage} onClose={() => setSelectedImage(null)} />
+      </div>
 
-      </main>
+      <ImageModal imageUrl={selectedImage} onClose={() => setSelectedImage(null)} />
+
     </div>
   );
 }
