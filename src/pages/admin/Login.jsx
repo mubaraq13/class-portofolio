@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { Lock, Mail, ArrowLeft, ShieldCheck, AlertCircle } from 'lucide-react';
-import { Turnstile } from '@marsidev/react-turnstile';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,18 +11,9 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // State penanda apakah verifikasi Cloudflare berhasil
-  const [isVerified, setIsVerified] = useState(false);
-
   const handleLogin = async (e) => {
     e.preventDefault();
     
-    // Cegah login kalau Cloudflare belum centang hijau
-    if (!isVerified) {
-      setError("Silakan verifikasi keamanan Cloudflare terlebih dahulu.");
-      return;
-    }
-
     setLoading(true);
     setError(null);
 
@@ -112,32 +102,12 @@ export default function Login() {
               </div>
             </div>
 
-            {/* WIDGET CLOUDFLARE TURNSTILE */}
-            <div className="pt-2 flex justify-center">
-              <Turnstile 
-                siteKey="0x4AAAAAAAEjrAb8PmXs9vlhf" 
-                onSuccess={(token) => {
-                  console.log("Cloudflare Verified!", token);
-                  setIsVerified(true);
-                  setError(null);
-                }}
-                onError={() => {
-                  setIsVerified(false);
-                  setError("Verifikasi Cloudflare gagal. Silakan coba lagi.");
-                }}
-                onExpire={() => {
-                  setIsVerified(false);
-                }}
-                options={{ theme: 'dark' }} // Tema gelap biar matching sama login kita
-              />
-            </div>
-
             <button 
               type="submit" 
-              disabled={loading || !isVerified}
+              disabled={loading}
               className="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black rounded-xl shadow-lg hover:shadow-cyan-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2"
             >
-              {loading ? "Authenticating..." : (!isVerified ? "Selesaikan Keamanan" : "Login to Dashboard")}
+              {loading ? "Authenticating..." : "Login to Dashboard"}
             </button>
           </form>
 

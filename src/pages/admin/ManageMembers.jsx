@@ -68,7 +68,16 @@ export default function ManageMembers() {
       existing_photo_url_2: member.photo_url_2 || '' 
     });
     setIsAdding(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // PERBAIKAN SCROLL: Arahkan ke area <main> dengan sedikit jeda (setTimeout)
+    setTimeout(() => {
+      const mainScrollArea = document.querySelector('main');
+      if (mainScrollArea) {
+        mainScrollArea.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Fallback
+      }
+    }, 100);
   };
 
   const handleCancel = () => {
