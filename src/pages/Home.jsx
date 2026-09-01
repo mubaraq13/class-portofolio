@@ -126,23 +126,27 @@ export default function Home() {
             </Link>
           </motion.div>
 
-          {/* Bento-style Stats */}
+          {/* Bento-style Stats (SEKARANG BISA DIKLIK) */}
           <motion.div variants={itemVariants} className="grid grid-cols-3 gap-4 pt-4 border-t border-white/10">
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm hover:bg-white/10 transition-colors">
-              <Users size={22} className="text-cyan-400 mb-2" />
+            
+            <Link to="/members" className="block bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm hover:bg-white/10 hover:border-cyan-500/50 transition-all hover:-translate-y-1 group">
+              <Users size={22} className="text-cyan-400 mb-2 group-hover:scale-110 transition-transform" />
               <h3 className="text-2xl font-black text-white">{stats.members || '0'}</h3>
               <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider mt-1">Anggota</p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm hover:bg-white/10 transition-colors">
-              <Code size={22} className="text-blue-400 mb-2" />
+            </Link>
+            
+            <Link to="/projects" className="block bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm hover:bg-white/10 hover:border-blue-500/50 transition-all hover:-translate-y-1 group">
+              <Code size={22} className="text-blue-400 mb-2 group-hover:scale-110 transition-transform" />
               <h3 className="text-2xl font-black text-white">{stats.projects || '0'}</h3>
               <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider mt-1">Projects</p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm hover:bg-white/10 transition-colors">
-              <Camera size={22} className="text-indigo-400 mb-2" />
+            </Link>
+            
+            <Link to="/gallery" className="block bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm hover:bg-white/10 hover:border-indigo-500/50 transition-all hover:-translate-y-1 group">
+              <Camera size={22} className="text-indigo-400 mb-2 group-hover:scale-110 transition-transform" />
               <h3 className="text-2xl font-black text-white">{stats.gallery || '0'}</h3>
               <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider mt-1">Memories</p>
-            </div>
+            </Link>
+
           </motion.div>
         </motion.div>
 
