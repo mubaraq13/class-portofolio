@@ -68,16 +68,16 @@ export default function Home() {
   return (
     <div className="min-h-screen text-white overflow-hidden relative flex items-center pt-24 pb-20">
       
-      {/* Background Animated Glow Orbs */}
+      {/* Background Animated Glow Orbs (OPTIMASI: Disembunyikan di HP dengan hidden md:block biar enteng) */}
       <motion.div 
         animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }} 
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-cyan-600/20 rounded-full filter blur-[150px] pointer-events-none"
+        className="hidden md:block absolute top-1/4 -left-32 w-[500px] h-[500px] bg-cyan-600/20 rounded-full filter blur-[150px] pointer-events-none"
       />
       <motion.div 
         animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.3, 0.2] }} 
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute bottom-0 -right-32 w-[600px] h-[600px] bg-indigo-600/20 rounded-full filter blur-[150px] pointer-events-none"
+        className="hidden md:block absolute bottom-0 -right-32 w-[600px] h-[600px] bg-indigo-600/20 rounded-full filter blur-[150px] pointer-events-none"
       />
 
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full relative z-10">
@@ -126,7 +126,7 @@ export default function Home() {
             </Link>
           </motion.div>
 
-          {/* Bento-style Stats (SEKARANG BISA DIKLIK) */}
+          {/* Bento-style Stats */}
           <motion.div variants={itemVariants} className="grid grid-cols-3 gap-4 pt-4 border-t border-white/10">
             
             <Link to="/members" className="block bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm hover:bg-white/10 hover:border-cyan-500/50 transition-all hover:-translate-y-1 group">
