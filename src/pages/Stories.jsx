@@ -22,7 +22,7 @@ export default function Stories() {
     // 1. Tarik data cerita pertama kali saat halaman dibuka
     fetchStories(); 
 
-    // 2. PASANG RADAR REALTIME SUPABASE 🚀
+    // 2. PASANG RADAR REALTIME SUPABASE
     const radar = supabase
       .channel('custom-stories-channel')
       .on(
@@ -30,15 +30,12 @@ export default function Stories() {
         { event: '*', schema: 'public', table: 'stories' }, // Pantau tabel 'stories'
         (payload) => {
           console.log('Ada cerita/bab baru masuk!', payload);
-          // 3. Langsung tarik data cerita baru tanpa refresh!
           fetchStories();
-          // Opsional: Langsung balik ke bab terbaru (index 0)
           setCurrentIndex(0); 
         }
       )
       .subscribe();
 
-    // 4. Matikan radar saat pindah halaman biar enteng
     return () => {
       supabase.removeChannel(radar);
     };
@@ -79,9 +76,6 @@ export default function Stories() {
       setFormData({ title: '', author: '', content: '' });
       alert("Bab cerita baru berhasil dijilid ke dalam buku kelas! 📖");
       
-      // Catatan: fetchStories() dan setCurrentIndex(0) sudah dihapus dari sini 
-      // karena sudah otomatis diurus sama Radar Realtime di atas!
-      
     } catch (error) { 
       alert("Gagal menyimpan cerita: " + error.message); 
     } finally { 
@@ -102,7 +96,7 @@ export default function Stories() {
     if (currentIndex < stories.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      setCurrentIndex(0); // Kembali ke halaman awal jika sudah di ujung
+      setCurrentIndex(0);
     }
   };
 
@@ -110,7 +104,7 @@ export default function Stories() {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
     } else {
-      setCurrentIndex(stories.length - 1); // Lompat ke halaman terakhir
+      setCurrentIndex(stories.length - 1);
     }
   };
 
@@ -146,10 +140,10 @@ export default function Stories() {
         </p>
       </motion.div>
 
-      {/* GRID LAYOUT UTAMA: KIRI FORM, KANAN SLIDER BUKU */}
+      {/* GRID LAYOUT UTAMA */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-auto">
         
-        {/* FORM TULIS CERITA (DI KIRI / STICKY) */}
+        {/* FORM TULIS CERITA */}
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -191,12 +185,16 @@ export default function Stories() {
               <label className="block text-sm font-semibold text-slate-700 mb-1">Isi Cerita / Bab</label>
               <textarea 
                 required 
-                rows="4" 
+                rows="8" 
+                maxLength="10000"
                 value={formData.content} 
                 onChange={(e) => setFormData({...formData, content: e.target.value})} 
                 className="w-full p-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 outline-none resize-none bg-slate-50 focus:bg-white transition-colors text-sm" 
-                placeholder="Tuliskan kisah seru di sini..."
+                placeholder="Tuliskan kisah seru sepanjang mungkin di sini..."
               ></textarea>
+              <div className="text-right text-[10px] font-medium text-slate-400 mt-1">
+                {formData.content.length} / 10000 karakter
+              </div>
             </div>
 
             <div className="pt-1">
@@ -211,7 +209,7 @@ export default function Stories() {
           </form>
         </motion.div>
 
-        {/* SLIDER Buku (DI KANAN): TAMPIL SATU PER SATU SEPERTI LEMBARAN BUKU */}
+        {/* SLIDER Buku */}
         <motion.div 
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -226,13 +224,10 @@ export default function Stories() {
           ) : (
             <div className="relative">
               
-              {/* KOTAK UTAMA LEMBARAN BUKU */}
-              <div className="bg-amber-50/95 backdrop-blur-md p-8 md:p-10 rounded-3xl border-2 border-amber-200 shadow-2xl relative min-h-[420px] flex flex-col justify-between overflow-hidden">
+              <div className="bg-amber-50/95 backdrop-blur-md p-8 md:p-10 rounded-3xl border-2 border-amber-200 shadow-2xl relative min-h-[480px] flex flex-col justify-between overflow-hidden">
                 
-                {/* Efek Garis Tengah Buku / Jilidan */}
                 <div className="absolute top-0 bottom-0 left-4 w-1 bg-amber-200/60 hidden md:block"></div>
 
-                {/* ANIMASI PERPINDAHAN HALAMAN (Framer Motion AnimatePresence) */}
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentStory.id}
@@ -243,7 +238,6 @@ export default function Stories() {
                     className="flex-1 flex flex-col justify-between"
                   >
                     <div>
-                      {/* Header Lembaran */}
                       <div className="flex justify-between items-start border-b border-amber-200/60 pb-4 mb-6">
                         <div>
                           <span className="text-xs font-mono font-bold text-amber-700/60 uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">
@@ -255,15 +249,13 @@ export default function Stories() {
                         </div>
                       </div>
 
-                      {/* Isi Teks Lembaran Buku */}
-                      <div className="max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
+                      <div className="max-h-[350px] overflow-y-auto pr-3 custom-scrollbar">
                         <p className="text-slate-700 text-base md:text-lg leading-relaxed whitespace-pre-wrap font-serif italic">
                           "{currentStory.content}"
                         </p>
                       </div>
                     </div>
 
-                    {/* Footer Lembaran (Penulis & Tanggal) */}
                     <div className="pt-6 mt-6 border-t border-amber-200/60 flex flex-wrap justify-between items-center text-xs md:text-sm text-amber-900/70 font-semibold">
                       <span className="flex items-center gap-1.5 bg-amber-100/80 px-3 py-1 rounded-full">
                         <User size={14} /> Ditulis oleh: {currentStory.author}
@@ -278,7 +270,6 @@ export default function Stories() {
 
               </div>
 
-              {/* TOMBOL NAVIGASI SLIDE (KIRI & KANAN) */}
               <div className="flex justify-between items-center mt-6 px-2">
                 <button 
                   onClick={handlePrev}
@@ -287,7 +278,6 @@ export default function Stories() {
                   <ChevronLeft size={20} /> Sebelumnya
                 </button>
 
-                {/* Indikator Titik Halaman */}
                 <div className="flex gap-1.5 overflow-x-auto max-w-[200px] py-2">
                   {stories.map((_, idx) => (
                     <button

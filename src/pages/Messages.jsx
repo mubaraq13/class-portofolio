@@ -1,7 +1,7 @@
 // src/pages/Messages.jsx
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { MessageSquare, Send, User, Clock, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MessageSquare, Send, User, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Messages() {
@@ -21,7 +21,7 @@ export default function Messages() {
     // 1. Tarik data pertama kali saat halaman dibuka
     fetchMessages();
 
-    // 2. PASANG RADAR REALTIME SUPABASE 🚀
+    // 2. PASANG RADAR REALTIME SUPABASE
     const radar = supabase
       .channel('custom-messages-channel')
       .on(
@@ -29,15 +29,12 @@ export default function Messages() {
         { event: '*', schema: 'public', table: 'messages' }, // Pantau tabel 'messages'
         (payload) => {
           console.log('Ada pesan baru masuk!', payload);
-          // 3. Langsung tarik pesan baru tanpa refresh!
           fetchMessages();
-          // Opsional: Langsung balik ke halaman 1 (index 0) biar pesan barunya kelihatan
           setCurrentIndex(0); 
         }
       )
       .subscribe();
 
-    // 4. Matikan radar saat pindah halaman biar enteng
     return () => {
       supabase.removeChannel(radar);
     };
@@ -77,9 +74,6 @@ export default function Messages() {
       setFormData({ name: '', message: '' });
       alert("Yeay! Pesanmu berhasil dijilid ke buku tamu! 🚀");
       
-      // Catatan: fetchMessages() dan setCurrentIndex(0) sudah dihapus dari sini 
-      // karena sudah di-handle otomatis oleh Radar Realtime di atas!
-      
     } catch (error) {
       alert("Gagal menyimpan pesan: " + error.message);
     } finally {
@@ -100,7 +94,7 @@ export default function Messages() {
     if (currentIndex < messages.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      setCurrentIndex(0); // Kembali ke halaman awal jika di ujung
+      setCurrentIndex(0);
     }
   };
 
@@ -108,7 +102,7 @@ export default function Messages() {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
     } else {
-      setCurrentIndex(messages.length - 1); // Lompat ke halaman terakhir
+      setCurrentIndex(messages.length - 1);
     }
   };
 
@@ -142,10 +136,10 @@ export default function Messages() {
         </p>
       </motion.div>
 
-      {/* GRID LAYOUT UTAMA: KIRI FORM, KANAN SLIDER BUKU TAMU */}
+      {/* GRID LAYOUT UTAMA */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-auto">
         
-        {/* FORM KIRIM PESAN (DI KIRI / STICKY) */}
+        {/* FORM KIRIM PESAN */}
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -177,11 +171,14 @@ export default function Messages() {
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-1">Pesan & Kesan</label>
               <textarea 
-                required rows="4" maxLength="500"
+                required rows="8" maxLength="10000"
                 value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})}
                 className="w-full p-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-cyan-500 outline-none bg-slate-50 focus:bg-white transition-colors resize-none text-sm" 
-                placeholder="Tulis kesan indahmu di sini..."
+                placeholder="Tulis kesan indahmu sepanjang mungkin di sini..."
               ></textarea>
+              <div className="text-right text-[10px] font-medium text-slate-400 mt-1">
+                {formData.message.length} / 10000 karakter
+              </div>
             </div>
 
             <div className="pt-1">
@@ -195,7 +192,7 @@ export default function Messages() {
           </form>
         </motion.div>
 
-        {/* SLIDER BUKU TAMU (DI KANAN): TAMPIL SATU PER SATU SEPERTI CATATAN BUKU */}
+        {/* SLIDER BUKU TAMU */}
         <motion.div 
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -210,13 +207,9 @@ export default function Messages() {
           ) : (
             <div className="relative">
               
-              {/* KOTAK UTAMA LEMBARAN BUKU TAMU */}
-              <div className="bg-amber-50/95 backdrop-blur-md p-8 md:p-10 rounded-3xl border-2 border-amber-200 shadow-2xl relative min-h-[400px] flex flex-col justify-between overflow-hidden">
-                
-                {/* Efek Garis Jilidan Buku */}
+              <div className="bg-amber-50/95 backdrop-blur-md p-8 md:p-10 rounded-3xl border-2 border-amber-200 shadow-2xl relative min-h-[450px] flex flex-col justify-between overflow-hidden">
                 <div className="absolute top-0 bottom-0 left-4 w-1 bg-amber-200/60 hidden md:block"></div>
 
-                {/* ANIMASI PERPINDAHAN LEMBARAN (Framer Motion) */}
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentMessage.id}
@@ -227,7 +220,6 @@ export default function Messages() {
                     className="flex-1 flex flex-col justify-between"
                   >
                     <div>
-                      {/* Header Catatan Buku */}
                       <div className="flex justify-between items-center border-b border-amber-200/60 pb-4 mb-6">
                         <span className="text-xs font-mono font-bold text-amber-700/60 uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">
                           Lembar {currentIndex + 1} dari {messages.length}
@@ -237,18 +229,16 @@ export default function Messages() {
                         </span>
                       </div>
 
-                      {/* Isi Pesan Catatan Buku */}
-                      <div className="max-h-[200px] overflow-y-auto pr-2 custom-scrollbar my-2">
+                      <div className="max-h-[350px] overflow-y-auto pr-3 custom-scrollbar my-2">
                         <p className="text-slate-800 text-lg md:text-xl leading-relaxed whitespace-pre-wrap font-serif italic">
                           "{currentMessage.message}"
                         </p>
                       </div>
                     </div>
 
-                    {/* Footer Lembaran (Profil Pengirim) */}
                     <div className="pt-6 mt-6 border-t border-amber-200/60 flex items-center gap-3">
-                      <div className="w-10 h-10 shrink-0 rounded-full bg-amber-200 text-amber-900 flex items-center justify-center font-bold text-base shadow-inner">
-                        {currentMessage.name.charAt(0).toUpperCase()}
+                      <div className="w-10 h-10 shrink-0 rounded-full bg-amber-200 text-amber-900 flex items-center justify-center font-bold text-base shadow-inner uppercase">
+                        {currentMessage.name.charAt(0)}
                       </div>
                       <div className="min-w-0">
                         <h3 className="font-bold text-amber-950 text-base truncate">{currentMessage.name}</h3>
@@ -258,10 +248,8 @@ export default function Messages() {
 
                   </motion.div>
                 </AnimatePresence>
-
               </div>
 
-              {/* TOMBOL NAVIGASI SLIDE (KIRI & KANAN) */}
               <div className="flex justify-between items-center mt-6 px-2">
                 <button 
                   onClick={handlePrev}
@@ -270,7 +258,6 @@ export default function Messages() {
                   <ChevronLeft size={20} /> Sebelumnya
                 </button>
 
-                {/* Indikator Titik Halaman */}
                 <div className="flex gap-1.5 overflow-x-auto max-w-[200px] py-2">
                   {messages.map((_, idx) => (
                     <button
@@ -295,7 +282,6 @@ export default function Messages() {
             </div>
           )}
         </motion.div>
-
       </div>
     </div>
   );
