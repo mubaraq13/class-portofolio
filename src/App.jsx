@@ -26,17 +26,22 @@ import ManageStories from './pages/admin/ManageStories';
 export default function App() {
   return (
     <Router>
-      {/* === FIX BACKGROUND MOBILE (ANTI LOMPAT) === */}
-      <div className="fixed top-0 left-0 w-full h-[120vh] -z-20 pointer-events-none">
-        <div 
-          className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: "url('/latar.jpg')" }}
-        ></div>
+      {/* === JURUS PAMUNGKAS: BACKGROUND MOBILE ANTI LOMPAT === */}
+      {/* Kita pakai fixed inset-0 dan tag <img> asli, bukan CSS background */}
+      <div className="fixed inset-0 w-full h-full -z-20 pointer-events-none bg-navy-900">
+        
+        {/* Gambar Latar Asli */}
+        <img 
+          src="/latar.jpg" 
+          alt="Background" 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        
         {/* OVERLAY GLASSMORPHISM: Gelap & Blur */}
-        <div className="absolute top-0 left-0 w-full h-full bg-navy-900/70 backdrop-blur-[4px]"></div>
+        <div className="absolute inset-0 bg-navy-900/70 backdrop-blur-[4px]"></div>
       </div>
 
-      {/* === KONTEN UTAMA (Perbaikan: Hapus text-white agar tulisan di card putih tetap terlihat) === */}
+      {/* === KONTEN UTAMA === */}
       <div className="relative min-h-screen overflow-x-hidden flex flex-col">
         <Navbar />
         
