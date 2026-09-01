@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Plus, Trash2, Edit, ArrowLeft, Image as ImageIcon, Upload } from 'lucide-react';
+import { Plus, Trash2, Edit, ArrowLeft, Image as ImageIcon, Film, Upload } from 'lucide-react';
 
 export default function ManageTimeline() {
   const navigate = useNavigate();
@@ -14,10 +14,10 @@ export default function ManageTimeline() {
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState(null);
   
-  // Tambah image_url ke state
   const [formData, setFormData] = useState({ title: '', event_date: '', description: '', image_url: '' });
   const [uploadFile, setUploadFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [mediaType, setMediaType] = useState('image'); // 'image' atau 'video'
 
   useEffect(() => { checkSessionAndFetchData(); }, []);
 
@@ -32,19 +32,30 @@ export default function ManageTimeline() {
     } catch (error) { console.error("Error:", error); } finally { setLoading(false); }
   };
 
+  // Cek apakah URL/File adalah Video
+  const isVideo = (urlOrType) => {
+    if (!urlOrType) return false;
+    return urlOrType.match(/\.(mp4|webm|ogg)$/i) || urlOrType.startsWith('video/');
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setUploadFile(file);
-      setPreviewUrl(URL.createObjectURL(file)); // Buat preview sementara di browser
+      setPreviewUrl(URL.createObjectURL(file));
+      setMediaType(file.type.startsWith('video/') ? 'video' : 'image');
     }
   };
 
   const handleEditClick = (event) => {
     setEditingId(event.id);
     setFormData({ title: event.title, event_date: event.event_date, description: event.description, image_url: event.image_url || '' });
-    setPreviewUrl(event.image_url || null);
+    
+    const url = event.image_url || '';
+    setPreviewUrl(url);
+    setMediaType(isVideo(url) ? 'video' : 'image');
     setUploadFile(null);
+    
     setIsAdding(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -55,6 +66,7 @@ export default function ManageTimeline() {
     setFormData({ title: '', event_date: '', description: '', image_url: '' });
     setUploadFile(null);
     setPreviewUrl(null);
+    setMediaType('image');
   };
 
   const handleDelete = async (id) => {
@@ -74,20 +86,18 @@ export default function ManageTimeline() {
     try {
       let finalImageUrl = formData.image_url;
 
-      // PROSES UPLOAD GAMBAR JIKA ADA
+      // PROSES UPLOAD MEDIA (FOTO/VIDEO)
       if (uploadFile) {
         const fileExt = uploadFile.name.split('.').pop();
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
         const filePath = `${fileName}`;
 
-        // Upload ke bucket 'timeline'
         const { error: uploadError } = await supabase.storage
           .from('timeline')
           .upload(filePath, uploadFile);
 
         if (uploadError) throw uploadError;
 
-        // Ambil link URL publiknya
         const { data: publicUrlData } = supabase.storage
           .from('timeline')
           .getPublicUrl(filePath);
@@ -147,21 +157,28 @@ export default function ManageTimeline() {
               <div><label className="block text-sm font-semibold mb-1">Tanggal</label><input type="date" required value={formData.event_date} onChange={(e) => setFormData({...formData, event_date: e.target.value})} className="w-full p-3 rounded-xl border focus:ring-cyan-500 outline-none" /></div>
             </div>
             
-            {/* INPUT GAMBAR BARU */}
+            {/* INPUT MEDIA (FOTO/VIDEO) */}
             <div>
-              <label className="block text-sm font-semibold mb-2">Upload Foto Momen (Opsional)</label>
+              <label className="block text-sm font-semibold mb-2">Upload Foto/Video (Opsional)</label>
               <div className="flex items-center gap-4">
                 {previewUrl ? (
-                  <img src={previewUrl} alt="Preview" className="w-24 h-24 object-cover rounded-xl border-2 border-cyan-200" />
+                  mediaType === 'video' ? (
+                    <video src={previewUrl} className="w-24 h-24 object-cover rounded-xl border-2 border-cyan-200" controls />
+                  ) : (
+                    <img src={previewUrl} alt="Preview" className="w-24 h-24 object-cover rounded-xl border-2 border-cyan-200" />
+                  )
                 ) : (
-                  <div className="w-24 h-24 flex items-center justify-center bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl">
-                    <ImageIcon size={32} className="text-slate-300" />
+                  <div className="w-24 h-24 flex flex-col items-center justify-center bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl gap-1">
+                    <div className="flex gap-1">
+                      <ImageIcon size={18} className="text-slate-400" />
+                      <Film size={18} className="text-slate-400" />
+                    </div>
                   </div>
                 )}
                 <label className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors w-full">
                   <Upload size={20} className="text-slate-400" />
-                  <span className="text-sm text-slate-500 font-medium">Klik untuk memilih gambar...</span>
-                  <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                  <span className="text-sm text-slate-500 font-medium">Pilih Foto atau Video...</span>
+                  <input type="file" accept="image/*,video/*" className="hidden" onChange={handleFileChange} />
                 </label>
               </div>
             </div>
@@ -182,15 +199,24 @@ export default function ManageTimeline() {
       <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
         <div className="overflow-x-auto w-full">
           <table className="w-full text-left border-collapse min-w-[600px]">
-            <thead><tr className="bg-slate-50 text-slate-500 text-sm border-b"><th className="p-4 font-semibold w-24">Foto</th><th className="p-4 font-semibold">Tanggal</th><th className="p-4 font-semibold">Momen / Judul</th><th className="p-4 font-semibold text-center w-28">Aksi</th></tr></thead>
+            <thead><tr className="bg-slate-50 text-slate-500 text-sm border-b"><th className="p-4 font-semibold w-24">Media</th><th className="p-4 font-semibold">Tanggal</th><th className="p-4 font-semibold">Momen / Judul</th><th className="p-4 font-semibold text-center w-28">Aksi</th></tr></thead>
             <tbody>
               {events.map((event) => (
                 <tr key={event.id} className="border-b hover:bg-slate-50">
                   <td className="p-4">
                     {event.image_url ? (
-                      <img src={event.image_url} alt="Event" className="w-16 h-16 object-cover rounded-lg shadow-sm border" />
+                      isVideo(event.image_url) ? (
+                        <div className="relative w-16 h-16 rounded-lg shadow-sm border overflow-hidden bg-slate-900">
+                          <video src={event.image_url} className="w-full h-full object-cover opacity-80" muted />
+                          <Film size={16} className="absolute inset-0 m-auto text-white/70" />
+                        </div>
+                      ) : (
+                        <img src={event.image_url} alt="Event" className="w-16 h-16 object-cover rounded-lg shadow-sm border" />
+                      )
                     ) : (
-                      <div className="w-16 h-16 flex items-center justify-center bg-slate-100 rounded-lg"><ImageIcon size={24} className="text-slate-300" /></div>
+                      <div className="w-16 h-16 flex flex-col items-center justify-center bg-slate-100 rounded-lg gap-1">
+                        <ImageIcon size={18} className="text-slate-300" />
+                      </div>
                     )}
                   </td>
                   <td className="p-4 font-semibold text-slate-600 whitespace-nowrap">{event.event_date}</td>
