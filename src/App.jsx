@@ -26,18 +26,21 @@ import ManageStories from './pages/admin/ManageStories';
 export default function App() {
   return (
     <Router>
-      {/* === UI/UX: GLOBAL BACKGROUND WRAPPER === 
-        Foto diset fixed agar tidak ikut ter-scroll
-      */}
-      <div 
-        className="min-h-screen bg-fixed bg-cover bg-center transition-all duration-500"
-        style={{ backgroundImage: "url('/latar.jpg')" }}
-      >
-        {/* OVERLAY GLASSMORPHISM: Gelap & Blur agar teks konten terbaca */}
-        <div className="min-h-screen bg-navy-900/70 backdrop-blur-[4px]">
-          
-          <Navbar />
-          
+      {/* === LATAR BELAKANG DIPAKU TETAP (FIXED) AGAR AMAN DI HP === */}
+      <div className="fixed inset-0 -z-20 overflow-hidden pointer-events-none">
+        <div 
+          className="absolute inset-0 bg-cover bg-center scale-105"
+          style={{ backgroundImage: "url('/latar.jpg')" }}
+        ></div>
+        {/* OVERLAY GLASSMORPHISM: Gelap & Blur */}
+        <div className="absolute inset-0 bg-navy-900/70 backdrop-blur-[4px]"></div>
+      </div>
+
+      {/* === KONTEN UTAMA YANG BISA DI-SCROLL === */}
+      <div className="relative min-h-screen text-white overflow-x-hidden flex flex-col">
+        <Navbar />
+        
+        <div className="flex-grow">
           <Routes>
             {/* PUBLIC ROUTES */}
             <Route path="/" element={<Home />} />
@@ -49,10 +52,10 @@ export default function App() {
             <Route path="/messages" element={<Messages />} />
             <Route path="/stories" element={<Stories />} />
 
-            {/* ADMIN LOGIN (Berdiri sendiri karena tidak butuh sidebar admin) */}
+            {/* ADMIN LOGIN */}
             <Route path="/admin/login" element={<Login />} />
 
-            {/* ADMIN ROUTES (Dibungkus dengan AdminLayout) */}
+            {/* ADMIN ROUTES */}
             <Route element={<AdminLayout />}>
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/members" element={<ManageMembers />} />
@@ -63,7 +66,6 @@ export default function App() {
               <Route path="/admin/stories" element={<ManageStories />} />
             </Route>
           </Routes>
-
         </div>
       </div>
     </Router>
