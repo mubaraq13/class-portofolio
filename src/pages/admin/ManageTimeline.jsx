@@ -92,14 +92,16 @@ export default function ManageTimeline() {
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
         const filePath = `${fileName}`;
 
+        // MENGGUNAKAN NAMA BUCKET YANG BENAR: timeline-images
         const { error: uploadError } = await supabase.storage
-          .from('timeline')
+          .from('timeline-images')
           .upload(filePath, uploadFile);
 
         if (uploadError) throw uploadError;
 
+        // MENGGUNAKAN NAMA BUCKET YANG BENAR: timeline-images
         const { data: publicUrlData } = supabase.storage
-          .from('timeline')
+          .from('timeline-images')
           .getPublicUrl(filePath);
 
         finalImageUrl = publicUrlData.publicUrl;

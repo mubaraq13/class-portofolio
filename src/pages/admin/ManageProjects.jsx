@@ -63,7 +63,12 @@ export default function ManageProjects() {
     setUploading(true);
     try {
       let coverUrl = editingId ? formData.existing_cover_url : '';
-      if (formData.cover_file) coverUrl = await uploadImage(formData.cover_file, 'project-covers');
+      
+      // PERBAIKAN: Ubah target bucket dari 'project-covers' menjadi 'project-images'
+      if (formData.cover_file) {
+        coverUrl = await uploadImage(formData.cover_file, 'project-images');
+      }
+      
       if (!coverUrl) return alert("File Cover wajib diisi!");
 
       // Trik agar URL kosong aman masuk database
