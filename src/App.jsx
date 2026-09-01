@@ -26,14 +26,15 @@ import ManageStories from './pages/admin/ManageStories';
 export default function App() {
   return (
     <Router>
-      {/* === LATAR BELAKANG DIPAKU TETAP (FIXED) AGAR AMAN DI HP === */}
-      <div className="fixed inset-0 -z-20 overflow-hidden pointer-events-none">
+      {/* === FIX BACKGROUND MOBILE (ANTI LOMPAT) === */}
+      {/* Dipaku di atas (top-0) dengan tinggi 120vh agar mengabaikan pergerakan Address Bar HP */}
+      <div className="fixed top-0 left-0 w-full h-[120vh] -z-20 pointer-events-none">
         <div 
-          className="absolute inset-0 bg-cover bg-center scale-105"
+          className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
           style={{ backgroundImage: "url('/latar.jpg')" }}
         ></div>
         {/* OVERLAY GLASSMORPHISM: Gelap & Blur */}
-        <div className="absolute inset-0 bg-navy-900/70 backdrop-blur-[4px]"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-navy-900/70 backdrop-blur-[4px]"></div>
       </div>
 
       {/* === KONTEN UTAMA YANG BISA DI-SCROLL === */}
