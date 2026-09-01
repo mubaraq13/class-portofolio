@@ -21,7 +21,7 @@ export default function Messages() {
     // 1. Tarik data pertama kali saat halaman dibuka
     fetchMessages();
 
-    // 2. PASANG RADAR REALTIME SUPABASE
+    // 2. PASANG RADAR REALTIME SUPABASE 🚀
     const radar = supabase
       .channel('custom-messages-channel')
       .on(
@@ -89,7 +89,6 @@ export default function Messages() {
     });
   };
 
-  // Navigasi Slide Buku
   const handleNext = () => {
     if (currentIndex < messages.length - 1) {
       setCurrentIndex(currentIndex + 1);
@@ -229,8 +228,9 @@ export default function Messages() {
                         </span>
                       </div>
 
-                      <div className="max-h-[350px] overflow-y-auto pr-3 custom-scrollbar my-2">
-                        <p className="text-slate-800 text-lg md:text-xl leading-relaxed whitespace-pre-wrap font-serif italic">
+                      {/* FIX NYAMPING: Tambah overflow-x-hidden, break-words, dan break-all */}
+                      <div className="max-h-[350px] overflow-y-auto overflow-x-hidden pr-3 custom-scrollbar my-2">
+                        <p className="text-slate-800 text-lg md:text-xl leading-relaxed whitespace-pre-wrap font-serif italic break-words break-all">
                           "{currentMessage.message}"
                         </p>
                       </div>

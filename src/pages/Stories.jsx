@@ -22,7 +22,7 @@ export default function Stories() {
     // 1. Tarik data cerita pertama kali saat halaman dibuka
     fetchStories(); 
 
-    // 2. PASANG RADAR REALTIME SUPABASE
+    // 2. PASANG RADAR REALTIME SUPABASE 🚀
     const radar = supabase
       .channel('custom-stories-channel')
       .on(
@@ -30,12 +30,15 @@ export default function Stories() {
         { event: '*', schema: 'public', table: 'stories' }, // Pantau tabel 'stories'
         (payload) => {
           console.log('Ada cerita/bab baru masuk!', payload);
+          // 3. Langsung tarik data cerita baru tanpa refresh!
           fetchStories();
+          // Opsional: Langsung balik ke bab terbaru (index 0)
           setCurrentIndex(0); 
         }
       )
       .subscribe();
 
+    // 4. Matikan radar saat pindah halaman biar enteng
     return () => {
       supabase.removeChannel(radar);
     };
@@ -96,7 +99,7 @@ export default function Stories() {
     if (currentIndex < stories.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      setCurrentIndex(0);
+      setCurrentIndex(0); // Kembali ke halaman awal jika sudah di ujung
     }
   };
 
@@ -104,7 +107,7 @@ export default function Stories() {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
     } else {
-      setCurrentIndex(stories.length - 1);
+      setCurrentIndex(stories.length - 1); // Lompat ke halaman terakhir
     }
   };
 
@@ -140,10 +143,10 @@ export default function Stories() {
         </p>
       </motion.div>
 
-      {/* GRID LAYOUT UTAMA */}
+      {/* GRID LAYOUT UTAMA: KIRI FORM, KANAN SLIDER BUKU */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-auto">
         
-        {/* FORM TULIS CERITA */}
+        {/* FORM TULIS CERITA (DI KIRI / STICKY) */}
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -209,7 +212,7 @@ export default function Stories() {
           </form>
         </motion.div>
 
-        {/* SLIDER Buku */}
+        {/* SLIDER Buku (DI KANAN): TAMPIL SATU PER SATU SEPERTI LEMBARAN BUKU */}
         <motion.div 
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -224,6 +227,7 @@ export default function Stories() {
           ) : (
             <div className="relative">
               
+              {/* KOTAK UTAMA LEMBARAN BUKU */}
               <div className="bg-amber-50/95 backdrop-blur-md p-8 md:p-10 rounded-3xl border-2 border-amber-200 shadow-2xl relative min-h-[480px] flex flex-col justify-between overflow-hidden">
                 
                 <div className="absolute top-0 bottom-0 left-4 w-1 bg-amber-200/60 hidden md:block"></div>
@@ -249,8 +253,9 @@ export default function Stories() {
                         </div>
                       </div>
 
-                      <div className="max-h-[350px] overflow-y-auto pr-3 custom-scrollbar">
-                        <p className="text-slate-700 text-base md:text-lg leading-relaxed whitespace-pre-wrap font-serif italic">
+                      {/* FIX NYAMPING: Tambah overflow-x-hidden, break-words, dan break-all */}
+                      <div className="max-h-[350px] overflow-y-auto overflow-x-hidden pr-3 custom-scrollbar">
+                        <p className="text-slate-700 text-base md:text-lg leading-relaxed whitespace-pre-wrap font-serif italic break-words break-all">
                           "{currentStory.content}"
                         </p>
                       </div>
