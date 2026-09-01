@@ -180,9 +180,6 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-transparent to-transparent"></div>
               
               <div className="absolute bottom-4 left-4 right-4 z-10">
-                <span className="inline-block px-3 py-1 mb-1 text-[10px] font-extrabold text-cyan-900 bg-cyan-400 rounded-full tracking-widest uppercase">
-                  family class 
-                </span>
                 <h3 className="text-lg font-bold text-white leading-tight">Kebersamaan Tanpa Batas</h3>
               </div>
             </div>
