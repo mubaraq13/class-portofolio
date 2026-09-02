@@ -1,613 +1,585 @@
-# 🎓 Class Portfolio & Digital Diary
-
 <div align="center">
 
-### 🌐 A Modern Digital Home for Class Memories, Stories & Student Portfolios
+🎓 Class Portfolio & Digital Diary 🚀
 
-**Class Portfolio & Digital Diary** is an interactive web application designed to transform a class archive into a modern digital experience. It combines student profiles, memories, projects, a chronological timeline, class stories, and an interactive guestbook in one responsive platform.
+A Modern, Realtime, & Interactive Memorial Web Application
 
-<br/>
+<p>
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" alt="Vite" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" />
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+</p>
 
-![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-Deployment-000000?style=for-the-badge&logo=vercel&logoColor=white)
+<p>
+  <strong>Merekam jejak, karya, dan cerita kelas dalam satu ruang digital tanpa batas.</strong>
+</p>
 
-![JavaScript](https://img.shields.io/badge/JavaScript-ES2023-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animation-FF0055?style=for-the-badge&logo=framer&logoColor=white)
-![React Router](https://img.shields.io/badge/React_Router-Routing-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)
-![Lucide](https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge)
+<p>
+  <a href="#-demo">🌐 Demo</a> •
+  <a href="#-fitur-unggulan">✨ Fitur</a> •
+  <a href="#-tech-stack">🛠️ Tech Stack</a> •
+  <a href="#-instalasi">⚙️ Instalasi</a> •
+  <a href="#-deployment">🚀 Deployment</a>
+</p>
 
 </div>
 
----
+📖 Tentang Project
 
-## 📌 Table of Contents
+Class Portfolio & Digital Diary adalah aplikasi web untuk mendokumentasikan perjalanan sebuah kelas dalam satu platform digital.
 
-- [Overview](#-overview)
-- [Why This Project](#-why-this-project)
-- [Core Features](#-core-features)
-- [Interactive Experience](#-interactive-experience)
-- [Tech Stack](#-tech-stack)
-- [Advantages](#-advantages)
-- [Limitations](#-limitations)
-- [System Architecture](#-system-architecture)
-- [Database Design](#-database-design)
-- [Storage Design](#-storage-design)
-- [Project Structure](#-project-structure)
-- [Required Tools](#-required-tools)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Environment Variables](#-environment-variables)
-- [Supabase Configuration](#-supabase-configuration)
-- [Database SQL](#-database-sql)
-- [Realtime Configuration](#-realtime-configuration)
-- [Storage Configuration](#-storage-configuration)
-- [Running the Project](#-running-the-project)
-- [Production Build](#-production-build)
-- [Deployment to Vercel](#-deployment-to-vercel)
-- [Security](#-security)
-- [Performance](#-performance)
-- [Development Workflow](#-development-workflow)
-- [Troubleshooting](#-troubleshooting)
-- [Roadmap](#-roadmap)
-- [License](#-license)
+Aplikasi ini menggabungkan:
 
----
+👥 Profil anggota kelas
 
-## 🧭 Overview
+🖼️ Galeri foto dan video
 
-This project is a **class digital archive and portfolio platform** built for documenting an entire class journey.
+📝 Buku tamu / messages
 
-Instead of keeping class photos, projects, stories, and memories scattered across social media, cloud folders, and chat applications, this application organizes them into a single interactive website.
+📔 Digital diary / stories
 
-### Main concept
+🗓️ Timeline perjalanan kelas
 
-```text
-                    🎓 CLASS DIGITAL HOME
-                            │
-        ┌───────────────────┼───────────────────┐
-        │                   │                   │
-     👥 Members          📸 Gallery          ⏳ Timeline
-        │                   │                   │
-        └───────────────────┼───────────────────┘
-                            │
-        ┌───────────────────┼───────────────────┐
-        │                   │                   │
-     🚀 Projects        📖 Stories          💌 Messages
-        │                   │                   │
-        └───────────────────┼───────────────────┘
-                            │
-                       🔐 Admin Panel
-                            │
-                     ⚡ Supabase Backend
-```
+💼 Portfolio project
 
-The interface focuses on **visual storytelling, smooth transitions, responsive layouts, realtime updates, and maintainable architecture**.
+🔐 Admin dashboard
 
----
+⚡ Realtime update
 
-# ✨ Core Features
+☁️ Cloud storage
 
-## 👥 1. Members — Meet Our Family
+Project dirancang sebagai single-page application (SPA) menggunakan React dan Vite, dengan Supabase sebagai backend, database PostgreSQL, authentication, realtime communication, dan file storage.
 
-A dedicated directory for every member of the class.
+Status Project: 🚧 Development / Customizable
 
-### Features
+🎯 Tujuan Project
 
-- Student profile cards
-- Formal and informal photos
-- Interactive 3D flip card
-- Name and class information
-- Short biography
-- Social media links
-- Responsive grid
-- Hover and motion interactions
-- Admin CRUD management
+Project ini dibuat untuk menyediakan ruang digital yang dapat digunakan oleh satu kelas untuk:
 
-### Example interaction
+Menyimpan dokumentasi kegiatan.
 
-```text
-              FRONT
-        ┌─────────────────┐
-        │                 │
-        │     PHOTO       │
-        │                 │
-        │   Student Name  │
-        └─────────────────┘
-                 ↓
-            Hover / Tap
-                 ↓
-              BACK
-        ┌─────────────────┐
-        │ About Student   │
-        │                 │
-        │ Instagram       │
-        │ GitHub          │
-        │ LinkedIn        │
-        └─────────────────┘
-```
+Menampilkan profil seluruh anggota kelas.
 
----
+Menampilkan project atau karya anggota.
 
-## 📸 2. Gallery — Class Memories
+Menyimpan cerita dan kenangan kelas.
 
-A visual archive for class photos and videos.
+Membuat timeline perjalanan kelas.
 
-### Features
+Menyediakan buku tamu interaktif.
 
-- Masonry-style image layout
-- High-resolution image support
-- Video support
-- Responsive media cards
-- Lightbox / media preview
-- Lazy loading
-- Metadata
-- Realtime content updates
-- Supabase Storage integration
+Mengelola konten melalui dashboard administrator.
 
-Recommended media categories:
+Menghadirkan data yang dapat diperbarui secara realtime.
 
-```text
-📚 Academic
-🎉 Events
-🏆 Achievements
-🚌 Trips
-🎓 Graduation
-😂 Random Moments
-❤️ Memories
-```
+✨ Fitur Unggulan
 
----
+⚡ 1. Realtime Auto-Update
 
-## ⏳ 3. Timeline Book — Our Journey
+Data dapat diperbarui secara realtime menggunakan Supabase Realtime.
 
-A chronological representation of important class events.
+Area yang dapat menggunakan realtime:
 
-### Example
+Messages
 
-```text
-2023
- │
- ├── 🎓 First Meeting
- │
- ├── 📚 First Semester
- │
- └── 🎉 First Class Event
-       │
-2024   │
- │     ├── 🏆 Competition
- │     ├── 🚌 Class Trip
- │     └── 📸 Photo Session
-       │
-2025   │
-       ├── 🚀 Final Project
-       └── 🎓 Graduation
-```
+Stories
 
-The timeline can use a book-style interface with:
-
-- Page transitions
-- Scroll-based animations
-- Event cards
-- Photos
-- Descriptions
-- Dates
-- Realtime updates
-
----
-
-## 🚀 4. Projects — Class Portfolio
-
-A portfolio section for:
-
-- Final assignments
-- Group projects
-- Research
-- Design projects
-- Programming projects
-- Engineering projects
-- Creative work
-
-Each project can contain:
-
-```text
-Title
-Description
-Thumbnail
 Gallery
+
+Timeline
+
+Projects
+
+Members
+
+Ketika data berubah di database, aplikasi dapat menerima perubahan tanpa harus melakukan refresh manual.
+
+📖 2. Interactive Book Reader
+
+Messages dan Stories dapat dibuat dengan konsep seperti buku digital.
+
+Contoh interaksi:
+
+Page transition
+
+Page flip
+
+Smooth animation
+
+Previous / next page
+
+Book cover
+
+Reader mode
+
+Konsep ini membuat halaman dokumentasi terasa lebih interaktif dibandingkan halaman CRUD biasa.
+
+🃏 3. 3D Flip Cards
+
+Halaman Members menggunakan kartu profil interaktif.
+
+Front Side
+
+Menampilkan:
+
+Foto
+
+Nama
+
+Role / posisi
+
+Informasi singkat
+
+Back Side
+
+Menampilkan:
+
+Bio
+
+Quote
+
+Social media
+
+Informasi tambahan
+
+Kartu dapat menggunakan animasi 3D flip.
+
+🎬 4. Smart Media Support
+
+Sistem media dapat menangani:
+
+JPG
+
+JPEG
+
+PNG
+
+WEBP
+
+GIF
+
+MP4
+
+WEBM
+
+Untuk media tertentu, aplikasi dapat membedakan apakah file merupakan gambar atau video dan menampilkan komponen yang sesuai.
+
+Contoh:
+
+Image
+ └── Preview → Click → Modal
+
+Video
+ └── Thumbnail → Hover → Play
+
+🖼️ 5. Interactive Gallery
+
+Gallery digunakan untuk menampilkan dokumentasi kelas.
+
+Fitur yang dapat tersedia:
+
+Grid layout
+
+Image preview
+
+Video preview
+
+Modal viewer
+
+Responsive layout
+
+Upload media
+
+Delete media
+
+Caption
+
+Category / tag
+
+📝 6. Messages / Guest Book
+
+Messages berfungsi sebagai buku tamu digital.
+
+Pengguna dapat:
+
+Menulis pesan
+
+Melihat pesan anggota lain
+
+Membaca pesan dalam format buku
+
+Menggunakan timestamp
+
+Mendapatkan update realtime
+
+Administrator dapat:
+
+Menambah data
+
+Mengedit data
+
+Menghapus data
+
+Moderasi pesan
+
+📔 7. Stories / Digital Diary
+
+Stories digunakan untuk menyimpan cerita perjalanan kelas.
+
+Contoh konten:
+
+Hari pertama masuk kelas
+
+Kegiatan kampus
+
+Praktikum
+
+Event
+
+Perjalanan
+
+Momen lucu
+
+Perpisahan
+
+Refleksi kelas
+
+🗓️ 8. Timeline
+
+Timeline menyimpan perjalanan kelas berdasarkan waktu.
+
+Contoh:
+
+2024
+ │
+ ├── 🎓 Awal Perkuliahan
+ │
+ ├── 🧪 Praktikum Pertama
+ │
+ ├── 🏆 Event Kampus
+ │
+ └── 📸 Dokumentasi Kelas
+ │
+2025
+ │
+ ├── 💼 Project
+ │
+ └── 🎓 Semester Akhir
+
+💼 9. Projects / Class Portfolio
+
+Projects digunakan untuk menampilkan karya atau project kelas.
+
+Informasi yang dapat ditampilkan:
+
+Project title
+
+Description
+
+Thumbnail
+
 Technology
-Team Members
+
+Team members
+
+Project URL
+
 GitHub URL
-Demo URL
-Created Date
-```
 
----
+Created date
 
-## 📖 5. Stories — Class Diary
+🔐 10. Secure Admin Dashboard
 
-A digital diary for long-form class stories.
+Administrator memiliki dashboard khusus untuk mengelola data.
 
-### Features
+Modul admin:
 
-- Chapter-based stories
-- Page-turning UI
-- Up to 10,000 characters per chapter
-- Author information
-- Created date
-- Cover image
-- Realtime updates
-- Admin CRUD
+Dashboard
+├── Members
+├── Gallery
+├── Messages
+├── Stories
+├── Timeline
+└── Projects
 
-Example:
+Operasi CRUD:
 
-```text
-┌─────────────────────────────────────────┐
-│              CLASS DIARY                 │
-│                                         │
-│              Chapter 01                 │
-│                                         │
-│        "The Beginning of Everything"    │
-│                                         │
-│  We didn't know at the time that...     │
-│                                         │
-│                     ← 1 / 10 →          │
-└─────────────────────────────────────────┘
-```
+Create
 
----
+Read
 
-## 💌 6. Messages — Interactive Guestbook
+Update
 
-A realtime message wall where visitors can leave messages.
+Delete
 
-### Realtime flow
+Upload media dapat diarahkan langsung ke Supabase Storage.
 
-```text
-Visitor A
-   │
-   │ Submit message
-   ↓
-Supabase PostgreSQL
-   │
-   │ Realtime event
-   ↓
+Catatan keamanan: keamanan aplikasi tidak cukup hanya dengan menyembunyikan halaman admin. Gunakan Supabase Auth dan Row Level Security (RLS) untuk membatasi operasi database berdasarkan role/permission.
+
+🖥️ Struktur Halaman
+
+Struktur halaman publik yang direkomendasikan:
+
+/
+├── Home
+├── Members
+├── Gallery
+├── Projects
+├── Stories
+├── Timeline
+└── Messages
+
+Halaman administrator:
+
+/admin
+├── Dashboard
+├── Members
+├── Gallery
+├── Projects
+├── Stories
+├── Timeline
+└── Messages
+
+🛠️ Tech Stack
+
+Frontend
+
+Technology
+
+Function
+
+React
+
+UI framework
+
+Vite
+
+Development server & build tool
+
+Tailwind CSS
+
+Styling
+
+Framer Motion
+
+Animation
+
+Lucide React
+
+Icons
+
+React Router DOM
+
+Client-side routing
+
+Backend
+
+Technology
+
+Function
+
+Supabase
+
+Backend as a Service
+
+PostgreSQL
+
+Relational database
+
 Supabase Realtime
-   │
-   ├───────────────┐
-   ↓               ↓
-Browser A       Browser B
-   │               │
-   └───────┬───────┘
-           ↓
-      Message appears
-      without refresh
-```
-
-Potential features:
-
-- Guest name
-- Message
-- Timestamp
-- Optional avatar
-- Realtime updates
-- Moderation
-- Admin delete
-- Character limit
-- Anti-spam controls
-
----
-
-# 🔐 7. Admin Panel
-
-The admin dashboard manages the application's content.
-
-### CRUD modules
-
-| Module | Create | Read | Update | Delete |
-|---|:---:|:---:|:---:|:---:|
-| Classes | ✅ | ✅ | ✅ | ✅ |
-| Members | ✅ | ✅ | ✅ | ✅ |
-| Gallery | ✅ | ✅ | ✅ | ✅ |
-| Timeline | ✅ | ✅ | ✅ | ✅ |
-| Projects | ✅ | ✅ | ✅ | ✅ |
-| Stories | ✅ | ✅ | ✅ | ✅ |
-| Messages | ❌ | ✅ | ❌ | ✅ |
-
-### Admin capabilities
-
-- Dashboard statistics
-- Member management
-- Media upload
-- Project management
-- Timeline management
-- Story management
-- Message moderation
-- Delete media
-- Update content
-- Manage published content
-
----
-
-# 🎬 Interactive Experience
-
-The project is designed to feel more like a **digital memory book** than a conventional CRUD website.
-
-Recommended animation principles:
-
-```text
-Page Load
-   ↓
-Fade + Slide
-   ↓
-Content Reveal
-   ↓
-Hover Interaction
-   ↓
-Scroll Animation
-   ↓
-Page Transition
-   ↓
-Realtime Content Update
-```
 
-### Animation library
+Realtime database events
+
+Supabase Storage
+
+File storage
+
+Supabase Auth
+
+Authentication & authorization
+
+Deployment
+
+Technology
+
+Function
 
-**Framer Motion** is used for:
+Vercel
 
-- Entrance animations
-- Exit animations
-- Page transitions
-- Hover effects
-- Card transforms
-- Modal transitions
-- Scroll animations
-- Staggered lists
-- Layout animations
+Hosting & deployment
 
-Animation should remain subtle enough that usability and performance are not sacrificed.
+GitHub
 
----
+Source code repository
 
-# 🛠️ Tech Stack
+🏗️ Arsitektur Sistem
 
-## Frontend
+                        ┌─────────────────────┐
+                        │       User          │
+                        │ Browser / Mobile    │
+                        └──────────┬──────────┘
+                                   │
+                                   ▼
+                        ┌─────────────────────┐
+                        │    React + Vite     │
+                        │      Frontend       │
+                        └──────────┬──────────┘
+                                   │
+                     ┌─────────────┴─────────────┐
+                     │                           │
+                     ▼                           ▼
+             ┌───────────────┐           ┌───────────────┐
+             │   Supabase    │           │    Vercel     │
+             │   Backend     │           │    Hosting    │
+             └───────┬───────┘           └───────────────┘
+                     │
+          ┌──────────┼──────────┐
+          │          │          │
+          ▼          ▼          ▼
+      PostgreSQL   Storage   Realtime
+      Database     Bucket    Channels
 
-| Technology | Purpose |
-|---|---|
-| React | UI component architecture |
-| Vite | Development server and build tool |
-| JavaScript / JSX | Application logic and UI |
-| Tailwind CSS | Utility-first styling |
-| Framer Motion | UI animation |
-| React Router DOM | Client-side routing |
-| Lucide React | Icon system |
+📁 Struktur Project
 
-## Backend
+📦 class-portfolio
+ ┣ 📂 public
+ ┃ ┗ 📜 favicon.*
+ ┣ 📂 src
+ ┃ ┣ 📂 components
+ ┃ ┃ ┗ 📜 ImageModal.jsx
+ ┃ ┣ 📂 lib
+ ┃ ┃ ┣ 📜 supabase.js
+ ┃ ┃ ┗ 📜 storage.js
+ ┃ ┣ 📂 pages
+ ┃ ┃ ┣ 📂 admin
+ ┃ ┃ ┃ ┣ 📜 Dashboard.jsx
+ ┃ ┃ ┃ ┣ 📜 ManageGallery.jsx
+ ┃ ┃ ┃ ┣ 📜 ManageMembers.jsx
+ ┃ ┃ ┃ ┣ 📜 ManageMessages.jsx
+ ┃ ┃ ┃ ┣ 📜 ManageProjects.jsx
+ ┃ ┃ ┃ ┣ 📜 ManageStories.jsx
+ ┃ ┃ ┃ ┗ 📜 ManageTimeline.jsx
+ ┃ ┃ ┣ 📜 Gallery.jsx
+ ┃ ┃ ┣ 📜 Members.jsx
+ ┃ ┃ ┣ 📜 Messages.jsx
+ ┃ ┃ ┣ 📜 Projects.jsx
+ ┃ ┃ ┣ 📜 Stories.jsx
+ ┃ ┃ ┗ 📜 Timeline.jsx
+ ┃ ┣ 📜 App.jsx
+ ┃ ┣ 📜 index.css
+ ┃ ┗ 📜 main.jsx
+ ┣ 📜 .env
+ ┣ 📜 .gitignore
+ ┣ 📜 vercel.json
+ ┣ 📜 tailwind.config.js
+ ┣ 📜 vite.config.js
+ ┣ 📜 package.json
+ ┗ 📜 README.md
 
-| Technology | Purpose |
-|---|---|
-| Supabase | Backend platform |
-| PostgreSQL | Relational database |
-| Supabase Auth | Authentication |
-| Supabase Realtime | Live database events |
-| Supabase Storage | Images and videos |
+⚙️ Instalasi
 
-## Deployment
+1. Prerequisites
 
-| Technology | Purpose |
-|---|---|
-| Git | Version control |
-| GitHub | Source-code hosting |
-| Vercel | Frontend deployment |
+Pastikan software berikut sudah tersedia:
 
----
+Node.js LTS
 
-# 📊 Advantages
+npm
 
-## ✅ 1. React
+Git
 
-**Advantages**
+Visual Studio Code atau code editor lain
 
-- Component-based architecture
-- Large ecosystem
-- Easy UI reuse
-- Suitable for interactive interfaces
-- Strong support for animation libraries
+Cek instalasi:
 
-**Trade-offs**
+node --version
+npm --version
+git --version
 
-- Requires JavaScript knowledge
-- SPA architecture requires correct routing configuration
-- Large applications need good component organization
+2. Clone Repository
 
----
+git clone https://github.com/mubaraqmkbs13/class-portfolio.git
 
-## ✅ 2. Vite
+Masuk ke folder:
 
-**Advantages**
+cd class-portfolio
 
-- Fast development server
-- Fast Hot Module Replacement
-- Simple configuration
-- Efficient production build
+3. Install Dependencies
 
-**Trade-offs**
+npm install
 
-- Requires additional backend services for database functionality
-- Project configuration is still required for production
+🔐 Environment Variables
 
----
+Buat file:
 
-## ✅ 3. Tailwind CSS
+.env
 
-**Advantages**
+di root project, sejajar dengan package.json.
 
-- Rapid UI development
-- Consistent utility classes
-- Responsive design support
-- Easy design-system implementation
+Contoh:
 
-**Trade-offs**
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
 
-- JSX can contain many utility classes
-- Requires familiarity with utility-first CSS
+Jangan commit file .env ke repository publik.
 
----
+Tambahkan .env ke .gitignore:
 
-## ✅ 4. Supabase
+node_modules
+dist
+.env
+.env.local
+.env.*.local
 
-**Advantages**
+🗄️ Setup Supabase
 
-- PostgreSQL database
-- Authentication
-- Storage
-- Realtime
-- Row Level Security
-- REST API generated from database schema
+Buat project baru di Supabase.
 
-**Trade-offs**
+Project membutuhkan database PostgreSQL dan Storage.
 
-- Requires careful security configuration
-- Storage policies must be configured correctly
-- Poor database/index design can affect performance
-- Realtime should only be enabled where necessary
+Database Tables
 
----
+Minimal tabel yang digunakan:
 
-## ✅ 5. Vercel
-
-**Advantages**
-
-- Simple Git integration
-- Automatic deployments
-- CDN-based delivery
-- Preview deployments
-- Easy environment-variable configuration
-
-**Trade-offs**
-
-- Production architecture still depends on the backend
-- Usage limits depend on the selected plan
-
----
-
-# 🏗️ System Architecture
-
-```text
-┌───────────────────────────────────────────────┐
-│                   USER                        │
-│             Desktop / Mobile                 │
-└──────────────────────┬────────────────────────┘
-                       │
-                       ▼
-┌───────────────────────────────────────────────┐
-│                  VERCEL                       │
-│            React + Vite Frontend              │
-└──────────────────────┬────────────────────────┘
-                       │
-          ┌────────────┼────────────┐
-          ▼            ▼            ▼
-     PostgreSQL     Storage       Auth
-          │            │            │
-          └────────────┼────────────┘
-                       ▼
-                 SUPABASE
-                       │
-                       ▼
-                 Realtime Events
-```
-
----
-
-# 🗄️ Database Design
-
-Recommended core tables:
-
-```text
 classes
 members
 gallery
 timeline
 projects
-stories
 messages
-```
+stories
 
-## `classes`
+Struktur field dapat disesuaikan dengan implementasi frontend.
 
-Stores class-level information.
+Contoh sederhana:
 
-Suggested fields:
+members
 
-```text
-id
-name
-description
-school
-major
-generation
-cover_image
-created_at
-updated_at
-```
-
-## `members`
-
-Stores student information.
-
-Suggested fields:
-
-```text
 id
 class_id
 name
-nickname
+photo_url
+role
 bio
-formal_photo
-informal_photo
-instagram_url
-github_url
-linkedin_url
+quote
+social_url
 created_at
-updated_at
-```
 
-## `gallery`
+gallery
 
-Stores gallery metadata.
-
-Suggested fields:
-
-```text
 id
 class_id
 title
 description
 media_url
 media_type
-thumbnail_url
-event_date
 created_at
-updated_at
-```
 
-`media_type` can be:
+timeline
 
-```text
-image
-video
-```
-
-## `timeline`
-
-Stores historical events.
-
-Suggested fields:
-
-```text
 id
 class_id
 title
@@ -615,488 +587,41 @@ description
 event_date
 image_url
 created_at
-updated_at
-```
 
-## `projects`
+projects
 
-Stores class projects.
-
-Suggested fields:
-
-```text
 id
 class_id
 title
 description
 thumbnail_url
-demo_url
 github_url
-technologies
+project_url
 created_at
-updated_at
-```
 
-## `stories`
+messages
 
-Stores diary chapters.
-
-Suggested fields:
-
-```text
-id
-class_id
-title
-content
-chapter_number
-cover_image
-author_name
-published
-created_at
-updated_at
-```
-
-## `messages`
-
-Stores guestbook messages.
-
-Suggested fields:
-
-```text
 id
 class_id
 name
 message
-avatar_url
-approved
 created_at
-```
 
-> **Important:** The exact SQL schema should be adapted to the application's actual code. The field list above is the recommended logical model, not a claim that every field already exists in the current source code.
-
----
-
-# 🗂️ Storage Design
-
-Recommended Supabase Storage buckets:
-
-```text
-timeline-images/
-project-images/
-gallery-images/
-member-photos/
-story-images/
-```
-
-Suggested organization:
-
-```text
-member-photos/
-├── member-id-001/
-│   ├── formal.webp
-│   └── informal.webp
-│
-├── member-id-002/
-│   ├── formal.webp
-│   └── informal.webp
-│
-└── ...
-
-gallery-images/
-├── 2024/
-├── 2025/
-└── 2026/
-
-project-images/
-├── project-001/
-└── project-002/
-```
-
----
-
-# 📁 Project Structure
-
-A recommended scalable structure:
-
-```text
-class-portfolio/
-│
-├── public/
-│   ├── favicon.svg
-│   ├── logo.svg
-│   └── assets/
-│
-├── src/
-│   │
-│   ├── assets/
-│   │   ├── images/
-│   │   └── fonts/
-│   │
-│   ├── components/
-│   │   ├── common/
-│   │   │   ├── Button.jsx
-│   │   │   ├── Modal.jsx
-│   │   │   ├── Loading.jsx
-│   │   │   └── EmptyState.jsx
-│   │   │
-│   │   ├── layout/
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── Footer.jsx
-│   │   │   └── PageTransition.jsx
-│   │   │
-│   │   ├── members/
-│   │   │   ├── MemberCard.jsx
-│   │   │   └── MemberGrid.jsx
-│   │   │
-│   │   ├── gallery/
-│   │   │   ├── GalleryGrid.jsx
-│   │   │   ├── MediaCard.jsx
-│   │   │   └── Lightbox.jsx
-│   │   │
-│   │   ├── timeline/
-│   │   │   ├── Timeline.jsx
-│   │   │   └── TimelineCard.jsx
-│   │   │
-│   │   ├── projects/
-│   │   │   ├── ProjectCard.jsx
-│   │   │   └── ProjectGrid.jsx
-│   │   │
-│   │   ├── stories/
-│   │   │   ├── Book.jsx
-│   │   │   └── Chapter.jsx
-│   │   │
-│   │   └── messages/
-│   │       ├── MessageWall.jsx
-│   │       └── MessageForm.jsx
-│   │
-│   ├── pages/
-│   │   ├── Home.jsx
-│   │   ├── Members.jsx
-│   │   ├── Gallery.jsx
-│   │   ├── Timeline.jsx
-│   │   ├── Projects.jsx
-│   │   ├── Stories.jsx
-│   │   ├── Messages.jsx
-│   │   ├── Login.jsx
-│   │   └── admin/
-│   │       ├── Dashboard.jsx
-│   │       ├── MembersAdmin.jsx
-│   │       ├── GalleryAdmin.jsx
-│   │       ├── TimelineAdmin.jsx
-│   │       ├── ProjectsAdmin.jsx
-│   │       ├── StoriesAdmin.jsx
-│   │       └── MessagesAdmin.jsx
-│   │
-│   ├── hooks/
-│   │   ├── useAuth.js
-│   │   ├── useRealtime.js
-│   │   └── useMediaQuery.js
-│   │
-│   ├── lib/
-│   │   ├── supabase.js
-│   │   └── constants.js
-│   │
-│   ├── services/
-│   │   ├── members.service.js
-│   │   ├── gallery.service.js
-│   │   ├── timeline.service.js
-│   │   ├── projects.service.js
-│   │   ├── stories.service.js
-│   │   └── messages.service.js
-│   │
-│   ├── context/
-│   │   └── AuthContext.jsx
-│   │
-│   ├── styles/
-│   │   └── globals.css
-│   │
-│   ├── App.jsx
-│   └── main.jsx
-│
-├── supabase/
-│   ├── migrations/
-│   └── seed.sql
-│
-├── .env
-├── .env.example
-├── .gitignore
-├── eslint.config.js
-├── index.html
-├── package.json
-├── vite.config.js
-├── vercel.json
-└── README.md
-```
-
-> Structure above is a recommended architecture. If your current repository uses different filenames, keep the real source structure and adapt this documentation accordingly.
-
----
-
-# 💻 Required Tools
-
-Before development, install these tools.
-
-## 1. Node.js
-
-Node.js is required to run the React/Vite development environment and npm.
-
-Download:
-
-https://nodejs.org/
-
-Verify:
-
-```bash
-node --version
-npm --version
-```
-
-Recommended: use a current **LTS** release.
-
----
-
-## 2. Git
-
-Git is required for version control.
-
-Download:
-
-https://git-scm.com/
-
-Verify:
-
-```bash
-git --version
-```
-
----
-
-## 3. Visual Studio Code
-
-Recommended editor:
-
-https://code.visualstudio.com/
-
-Recommended extensions:
-
-- ESLint
-- Prettier - Code formatter
-- Tailwind CSS IntelliSense
-- GitLens
-- Error Lens
-- Auto Rename Tag
-- ES7+ React/Redux/React-Native Snippets
-
----
-
-## 4. GitHub Account
-
-Required if the source code will be hosted on GitHub.
-
-https://github.com/
-
-Used for:
-
-- Repository hosting
-- Version control
-- Collaboration
-- Vercel deployment integration
-
----
-
-## 5. Supabase Account
-
-Required for:
-
-- PostgreSQL
-- Authentication
-- Realtime
-- Storage
-
-https://supabase.com/
-
----
-
-## 6. Vercel Account
-
-Recommended for deployment.
-
-https://vercel.com/
-
----
-
-# 📋 Prerequisites
-
-Make sure the following are available:
-
-```text
-☑ Node.js
-☑ npm
-☑ Git
-☑ VS Code
-☑ GitHub account
-☑ Supabase project
-☑ Vercel account
-```
-
----
-
-# 🚀 Installation
-
-## 1. Clone Repository
-
-```bash
-git clone https://github.com/your-username/class-portfolio.git
-cd class-portfolio
-```
-
----
-
-## 2. Install Dependencies
-
-```bash
-npm install
-```
-
----
-
-## 3. Install Core Packages
-
-If the project has not installed the required dependencies yet:
-
-```bash
-npm install react react-dom
-npm install react-router-dom
-npm install @supabase/supabase-js
-npm install framer-motion
-npm install lucide-react
-```
-
-For Tailwind CSS, use the installation method appropriate to the Tailwind CSS major version used by the project. Do not mix Tailwind v3 configuration with Tailwind v4 configuration.
-
----
-
-# 🔑 Environment Variables
-
-Create:
-
-```text
-.env
-```
-
-Example:
-
-```env
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_publishable_key
-```
-
-> Use the public client-side Supabase key intended for browser applications. Never expose a Supabase service-role key in a Vite frontend.
-
-Create `.env.example`:
-
-```env
-VITE_SUPABASE_URL=
-VITE_SUPABASE_ANON_KEY=
-```
-
-### Important
-
-Never commit:
-
-```text
-.env
-```
-
-to GitHub.
-
-Add it to `.gitignore`:
-
-```gitignore
-node_modules/
-dist/
-.env
-.env.local
-.env.*.local
-```
-
----
-
-# 🗄️ Supabase Setup
-
-## 1. Create Project
-
-Open:
-
-https://supabase.com/
-
-Create a new project.
-
-Record:
-
-```text
-Project URL
-Public client key
-```
-
-Do not expose:
-
-```text
-service_role key
-```
-
-in frontend code.
-
----
-
-# 🧱 Database Setup
-
-Create the core tables:
-
-```text
-classes
-members
-gallery
-timeline
-projects
 stories
-messages
-```
 
-A production implementation should also consider:
-
-```text
-created_at
-updated_at
+id
 class_id
-published / approved flags
-foreign keys
-indexes
-constraints
-```
+title
+content
+cover_url
+created_at
 
----
+⚡ Supabase Realtime
 
-# ⚡ Realtime Setup
+Jika fitur realtime digunakan, pastikan tabel yang diperlukan telah dikonfigurasi untuk menerima perubahan melalui Supabase Realtime.
 
-For tables that require live updates, enable Supabase Realtime according to the current Supabase dashboard configuration.
+Contoh penggunaan dari React:
 
-Recommended realtime candidates:
-
-```text
-messages
-stories
-timeline
-projects
-members
-gallery
-```
-
-Do not enable realtime indiscriminately for every table. Only subscribe where the UI actually needs live changes.
-
-### Example realtime concept
-
-```javascript
 const channel = supabase
   .channel('messages-realtime')
   .on(
@@ -1104,174 +629,104 @@ const channel = supabase
     {
       event: '*',
       schema: 'public',
-      table: 'messages'
+      table: 'messages',
     },
     (payload) => {
-      console.log(payload);
+      console.log('Database changed:', payload)
     }
   )
-  .subscribe();
-```
+  .subscribe()
 
-Always clean up subscriptions when React components unmount.
+Hapus subscription saat component di-unmount:
 
----
+return () => {
+  supabase.removeChannel(channel)
+}
 
-# 🗃️ Storage Buckets
+📁 Supabase Storage
 
-Create buckets according to the media architecture:
+Buat bucket:
 
-```text
 timeline-images
 project-images
 gallery-images
 member-photos
-story-images
-```
 
-For every bucket, configure:
+Contoh struktur storage:
 
-- Upload policy
-- Read policy
-- Update policy
-- Delete policy
+member-photos/
+├── member-001.jpg
+├── member-002.jpg
+└── member-003.jpg
 
-Do not make every bucket public by default.
+gallery-images/
+├── event-001.jpg
+├── event-002.jpg
+└── event-003.mp4
 
-If private media is required, use authenticated access and signed URLs instead.
+Bucket public hanya cocok jika file memang dimaksudkan untuk dapat diakses publik. Untuk data privat, gunakan bucket private dan signed URLs.
 
----
+▶️ Menjalankan Project
 
-# 🔐 Row Level Security
+Development mode:
 
-For production, enable **Row Level Security (RLS)** on database tables.
-
-General principle:
-
-```text
-Public User
-    │
-    ├── READ published content
-    │
-    └── CREATE guestbook message
-             │
-             ▼
-        Moderation
-
-Admin
-    │
-    ├── CREATE
-    ├── READ
-    ├── UPDATE
-    └── DELETE
-```
-
-Never rely only on hidden admin routes in React for authorization.
-
-Client-side route protection is not a security boundary.
-
-Authorization must be enforced by Supabase policies.
-
----
-
-# 🧪 Development
-
-Start the local server:
-
-```bash
 npm run dev
-```
 
-Open:
+Aplikasi biasanya tersedia pada:
 
-```text
 http://localhost:5173
-```
 
-Depending on the Vite configuration, the port can differ.
+🏭 Production Build
 
----
+Build aplikasi:
 
-# 📦 Production Build
-
-Build the application:
-
-```bash
 npm run build
-```
 
-Preview the production build:
+Preview hasil build:
 
-```bash
 npm run preview
-```
 
-The generated production files are normally placed in:
+🚀 Deployment
 
-```text
-dist/
-```
+Vercel
 
----
+Project dapat di-deploy menggunakan Vercel.
 
-# 🌐 Deployment to Vercel
+1. Push ke GitHub
 
-## 1. Push to GitHub
-
-```bash
 git add .
-git commit -m "feat: build class portfolio"
+git commit -m "Initial project"
 git push origin main
-```
 
-## 2. Import Project into Vercel
+2. Import Repository
 
-Open:
+Di Vercel:
 
-https://vercel.com/
-
-Then:
-
-```text
-New Project
-   ↓
+Add New Project
+        ↓
 Import Git Repository
-   ↓
+        ↓
 Select class-portfolio
-   ↓
-Configure Environment Variables
-   ↓
+        ↓
+Configure Project
+        ↓
 Deploy
-```
 
-Add:
+3. Environment Variables
 
-```text
+Tambahkan:
+
 VITE_SUPABASE_URL
 VITE_SUPABASE_ANON_KEY
-```
 
----
+Nilainya harus sama dengan konfigurasi Supabase.
 
-# 🔀 SPA Routing
+4. SPA Routing
 
-Because React Router uses client-side routing, direct navigation to routes such as:
+Karena React Router menggunakan client-side routing, server perlu mengarahkan route aplikasi kembali ke index.html.
 
-```text
-/members
-/gallery
-/timeline
-/projects
-/stories
-/messages
-/admin
-```
+Contoh vercel.json:
 
-must be handled correctly by the deployment platform.
-
-For Vercel, a common configuration is:
-
-```json
 {
   "rewrites": [
     {
@@ -1280,606 +735,550 @@ For Vercel, a common configuration is:
     }
   ]
 }
-```
 
-Use this only when it matches the project's deployment architecture.
+🔒 Security
 
----
+Beberapa hal penting sebelum production:
 
-# 🔒 Security Checklist
+Jangan expose secret key
 
-Before production:
+Aman untuk frontend:
 
-```text
-☐ .env is not committed
-☐ Service-role key is never exposed to browser
-☐ RLS is enabled
-☐ Admin policies are restricted
-☐ Storage policies are configured
-☐ File upload validation exists
-☐ File size limits exist
-☐ Guestbook spam protection exists
-☐ User-generated content is validated
-☐ Admin authentication is enabled
-☐ Database indexes are reviewed
-☐ Realtime subscriptions are cleaned up
-```
-
----
-
-# ⚡ Performance Checklist
-
-For a media-heavy class portfolio:
-
-### Images
-
-Prefer:
-
-```text
-WebP
-AVIF
-```
-
-when supported by the media pipeline.
-
-Use:
-
-- Responsive images
-- Lazy loading
-- Appropriate image dimensions
-- Thumbnails for galleries
-- Compression before upload
-
-### Videos
-
-Avoid loading every video immediately.
-
-Prefer:
-
-```text
-poster image
-lazy loading
-compressed video
-reasonable resolution
-```
-
-### React
-
-Use:
-
-```text
-component reuse
-memoization when justified
-pagination
-virtualization for very large lists
-code splitting
-route-level lazy loading
-```
-
-Do not optimize prematurely. Measure first.
-
----
-
-# 🧩 Recommended UI Sections
-
-A polished home page can follow this structure:
-
-```text
-┌─────────────────────────────────────────────┐
-│ NAVBAR                                      │
-├─────────────────────────────────────────────┤
-│                                             │
-│             HERO EXPERIENCE                 │
-│      Class Name / Generation                │
-│                                             │
-├─────────────────────────────────────────────┤
-│                                             │
-│             OUR STORY                       │
-│                                             │
-├─────────────────────────────────────────────┤
-│                                             │
-│             MEMBERS                         │
-│                                             │
-├─────────────────────────────────────────────┤
-│                                             │
-│             TIMELINE                        │
-│                                             │
-├─────────────────────────────────────────────┤
-│                                             │
-│             GALLERY                         │
-│                                             │
-├─────────────────────────────────────────────┤
-│                                             │
-│             PROJECTS                        │
-│                                             │
-├─────────────────────────────────────────────┤
-│                                             │
-│             CLASS DIARY                     │
-│                                             │
-├─────────────────────────────────────────────┤
-│                                             │
-│             GUESTBOOK                       │
-│                                             │
-├─────────────────────────────────────────────┤
-│                                             │
-│             FOOTER                          │
-│                                             │
-└─────────────────────────────────────────────┘
-```
-
----
-
-# 🎨 Design Direction
-
-Recommended visual direction:
-
-```text
-Style       : Modern Editorial
-Mood        : Nostalgic + Premium
-Layout      : Spacious
-Typography  : Clean + Elegant
-Animation   : Smooth + Purposeful
-Cards       : Soft / Glass / Editorial
-Media       : Large visual focus
-Responsive  : Mobile-first
-```
-
-Suggested design principles:
-
-- Strong typography hierarchy
-- Large photography
-- Generous whitespace
-- Subtle gradients
-- Smooth transitions
-- Consistent border radius
-- Consistent spacing scale
-- Accessible contrast
-- Minimal visual noise
-
----
-
-# 🧠 Recommended UX Principles
-
-The website should not feel like an administration system.
-
-The public interface should prioritize:
-
-```text
-Emotion
-   ↓
-Story
-   ↓
-Visual Memory
-   ↓
-Interaction
-   ↓
-Information
-```
-
-The admin interface should prioritize:
-
-```text
-Clarity
-   ↓
-Speed
-   ↓
-Data Management
-   ↓
-Validation
-   ↓
-Security
-```
-
----
-
-# 🧪 Testing Checklist
-
-Before release:
-
-## Functional
-
-```text
-☐ Home loads
-☐ Navigation works
-☐ Members load
-☐ Gallery loads
-☐ Videos play
-☐ Timeline works
-☐ Projects load
-☐ Stories work
-☐ Guestbook submission works
-☐ Realtime messages work
-☐ Admin login works
-☐ CRUD operations work
-☐ Media upload works
-☐ Media deletion works
-```
-
-## Responsive
-
-Test:
-
-```text
-☐ Mobile
-☐ Tablet
-☐ Laptop
-☐ Desktop
-```
-
-## Browser
-
-Test at minimum:
-
-```text
-☐ Chrome
-☐ Edge
-☐ Firefox
-☐ Safari
-```
-
----
-
-# 🐛 Troubleshooting
-
-## `npm` is not recognized
-
-Check Node.js:
-
-```bash
-node --version
-npm --version
-```
-
-If unavailable, install Node.js and restart the terminal.
-
----
-
-## Supabase connection error
-
-Check:
-
-```text
 VITE_SUPABASE_URL
 VITE_SUPABASE_ANON_KEY
-```
 
-Then restart:
+Jangan pernah memasukkan:
 
-```bash
-npm run dev
-```
+SUPABASE_SERVICE_ROLE_KEY
 
-Environment variables are loaded when the development server starts.
+ke frontend atau repository publik.
 
----
+Gunakan Row Level Security
 
-## Images do not appear
+Supabase RLS sebaiknya digunakan untuk menentukan siapa yang dapat:
 
-Check:
+SELECT
+INSERT
+UPDATE
+DELETE
 
-```text
-☐ Bucket exists
-☐ Storage policy exists
-☐ URL is correct
-☐ File exists
-☐ Bucket visibility matches application logic
-```
+Contoh konsep:
 
----
+Public
+ └── SELECT public content
 
-## Realtime does not update
+Authenticated User
+ └── INSERT message
 
-Check:
+Admin
+ ├── INSERT
+ ├── UPDATE
+ └── DELETE
 
-```text
-☐ Realtime is enabled
-☐ Correct table is subscribed
-☐ Subscription channel is active
-☐ RLS allows the required operation
-☐ React subscription cleanup is implemented correctly
-```
+Policy harus disesuaikan dengan struktur authentication dan role pada project.
 
----
+🧩 Environment Architecture
 
-## Refreshing a route returns 404
+Local Development
+       │
+       ├── React
+       ├── Vite
+       └── .env
+              │
+              ▼
+          Supabase
+              │
+       ┌──────┼──────┐
+       ▼      ▼      ▼
+    Database Storage Realtime
 
-Check the Vercel SPA rewrite configuration and confirm that the deployment is serving `index.html` for client-side routes.
 
----
+Production
+       │
+       ▼
+     Vercel
+       │
+       ▼
+ React Application
+       │
+       ▼
+   Supabase
 
-# 🧰 Useful Commands
+📱 Responsive Design
 
-Install dependencies:
+UI dirancang dengan pendekatan mobile-first.
 
-```bash
+Target:
+
+Mobile
+  ↓
+Tablet
+  ↓
+Laptop
+  ↓
+Desktop
+
+Komponen harus mendukung:
+
+Touch interaction
+
+Responsive grid
+
+Responsive typography
+
+Mobile navigation
+
+Desktop navigation
+
+Adaptive modal
+
+Flexible media
+
+🎨 Design Direction
+
+Rekomendasi visual:
+
+Style
+
+Modern
+Minimal
+Elegant
+Interactive
+Youthful
+Editorial
+
+UI Elements
+
+Glassmorphism secukupnya
+
+Soft shadows
+
+Rounded cards
+
+Large typography
+
+Smooth transitions
+
+Micro-interactions
+
+Image-focused layout
+
+Editorial typography
+
+Animation
+
+Gunakan animasi untuk meningkatkan UX, bukan sekadar dekorasi.
+
+Contoh:
+
+Page Enter
+   ↓
+Fade + Slide
+
+Card Hover
+   ↓
+Scale + Shadow
+
+Book
+   ↓
+Page Flip
+
+Gallery
+   ↓
+Image Reveal
+
+Navigation
+   ↓
+Smooth Transition
+
+⚖️ Analisis Project
+
+🟢 Kelebihan
+
+1. Modern Architecture
+
+React + Vite memberikan development experience yang cepat dan struktur frontend yang modular.
+
+2. Realtime Experience
+
+Supabase Realtime memungkinkan UI menerima perubahan data tanpa reload manual.
+
+3. Low Infrastructure Complexity
+
+Supabase menyediakan database, storage, authentication, dan realtime dalam satu platform.
+
+4. Scalable Frontend Structure
+
+Komponen dapat dipisahkan menjadi reusable components sehingga project lebih mudah dikembangkan.
+
+5. Responsive
+
+Tailwind CSS mempermudah implementasi responsive UI.
+
+6. Rich Interaction
+
+Framer Motion dapat digunakan untuk membuat:
+
+Page transition
+
+Modal animation
+
+Flip card
+
+Scroll animation
+
+Micro-interaction
+
+🔴 Kekurangan & Limitasi
+
+1. Free Tier Limit
+
+Layanan cloud memiliki batas penggunaan sesuai paket yang aktif. Batas aktual perlu dicek pada pricing dan dokumentasi layanan saat deployment.
+
+2. SPA SEO
+
+React SPA membutuhkan konfigurasi tambahan jika SEO menjadi prioritas utama.
+
+3. Internet Dependency
+
+Fitur realtime dan cloud storage membutuhkan koneksi internet.
+
+4. Realtime Connection Management
+
+Subscription realtime harus dikelola dengan benar agar tidak menyebabkan:
+
+Duplicate listeners
+
+Memory leaks
+
+Unnecessary connections
+
+5. Security Configuration
+
+Supabase dapat aman untuk production, tetapi RLS, Auth, Storage Policies, dan database policies harus dikonfigurasi dengan benar.
+
+🧪 Development Workflow
+
+Workflow yang direkomendasikan:
+
+1. Create Feature
+       ↓
+2. Build Component
+       ↓
+3. Connect Supabase
+       ↓
+4. Test Local
+       ↓
+5. Git Commit
+       ↓
+6. Push GitHub
+       ↓
+7. Vercel Build
+       ↓
+8. Production
+
+🧹 Code Quality
+
+Rekomendasi struktur:
+
+components/
+    reusable UI
+
+pages/
+    page-level components
+
+lib/
+    external service configuration
+
+hooks/
+    reusable React hooks
+
+utils/
+    helper functions
+
+Jika project semakin besar, struktur dapat dikembangkan menjadi:
+
+src/
+├── components/
+├── features/
+│   ├── members/
+│   ├── gallery/
+│   ├── messages/
+│   ├── stories/
+│   ├── timeline/
+│   └── projects/
+├── hooks/
+├── lib/
+├── pages/
+├── utils/
+└── assets/
+
+🧭 Roadmap
+
+Phase 1 — Core
+
+React setup
+
+Vite setup
+
+Tailwind setup
+
+Supabase setup
+
+Database schema
+
+Basic routing
+
+Phase 2 — Public Pages
+
+Home
+
+Members
+
+Gallery
+
+Projects
+
+Stories
+
+Timeline
+
+Messages
+
+Phase 3 — Interaction
+
+Page flip
+
+3D cards
+
+Modal viewer
+
+Scroll animations
+
+Hover video
+
+Realtime update
+
+Phase 4 — Admin
+
+Authentication
+
+Admin dashboard
+
+CRUD Members
+
+CRUD Gallery
+
+CRUD Projects
+
+CRUD Stories
+
+CRUD Timeline
+
+CRUD Messages
+
+Phase 5 — Production
+
+RLS
+
+Storage policies
+
+Performance optimization
+
+Responsive testing
+
+Error handling
+
+SEO metadata
+
+Vercel deployment
+
+Production testing
+
+🐛 Troubleshooting
+
+npm install gagal
+
+Coba:
+
+npm cache verify
 npm install
-```
 
-Start development:
+Jika dependency bermasalah:
 
-```bash
-npm run dev
-```
-
-Build:
-
-```bash
-npm run build
-```
-
-Preview:
-
-```bash
-npm run preview
-```
-
-Lint:
-
-```bash
-npm run lint
-```
-
-Git status:
-
-```bash
-git status
-```
-
-Commit:
-
-```bash
-git add .
-git commit -m "your message"
-```
-
-Push:
-
-```bash
-git push origin main
-```
-
----
-
-# 🌱 Development Workflow
-
-Recommended workflow:
-
-```text
-1. Plan feature
-       ↓
-2. Design UI
-       ↓
-3. Define database model
-       ↓
-4. Build reusable components
-       ↓
-5. Connect Supabase
-       ↓
-6. Add validation
-       ↓
-7. Add animations
-       ↓
-8. Test responsive layout
-       ↓
-9. Run production build
-       ↓
-10. Deploy
-```
-
----
-
-# 🗺️ Roadmap
-
-## Phase 1 — Foundation
-
-- [x] React + Vite
-- [x] Tailwind CSS
-- [x] Supabase integration
-- [x] Basic routing
-- [x] Responsive layout
-
-## Phase 2 — Public Experience
-
-- [ ] Hero section
-- [ ] Members
-- [ ] Gallery
-- [ ] Timeline
-- [ ] Projects
-- [ ] Stories
-- [ ] Guestbook
-
-## Phase 3 — Realtime
-
-- [ ] Realtime messages
-- [ ] Realtime stories
-- [ ] Realtime gallery
-- [ ] Realtime timeline
-
-## Phase 4 — Admin
-
-- [ ] Authentication
-- [ ] Dashboard
-- [ ] CRUD
-- [ ] Media management
-- [ ] Moderation
-- [ ] Storage management
-
-## Phase 5 — Production
-
-- [ ] RLS audit
-- [ ] Storage policy audit
-- [ ] Performance optimization
-- [ ] Accessibility review
-- [ ] SEO
-- [ ] Analytics
-- [ ] Production deployment
-
----
-
-# 🔮 Future Improvements
-
-Possible future features:
-
-```text
-🎵 Background music with user-controlled playback
-🌙 Dark / light mode
-🔎 Global search
-🏷️ Gallery categories
-📅 Event calendar
-❤️ Reactions
-💬 Story comments
-🔔 Notifications
-📱 PWA support
-🌍 Multi-language support
-📊 Admin analytics
-📥 Export class archive
-🖨️ Printable memory book
-🤖 AI-assisted story organization
-```
-
-These features should be added only when they provide measurable value and do not unnecessarily increase application complexity.
-
----
-
-# 📐 Architecture Principles
-
-This project follows several important principles:
-
-### Separation of concerns
-
-```text
-UI
- ↓
-Components
- ↓
-Pages
- ↓
-Services
- ↓
-Supabase
-```
-
-### Reusable components
-
-Avoid duplicating:
-
-```text
-buttons
-modals
-cards
-loading states
-forms
-media viewers
-```
-
-### Centralized backend access
-
-Keep Supabase interaction inside service/helper layers where practical.
-
-Example:
-
-```text
-services/
-├── members.service.js
-├── gallery.service.js
-├── projects.service.js
-└── messages.service.js
-```
-
-This keeps UI components easier to maintain.
-
----
-
-# 🧾 Project Information
-
-| Category | Technology |
-|---|---|
-| Language | JavaScript / JSX |
-| UI Framework | React |
-| Build Tool | Vite |
-| CSS | Tailwind CSS |
-| Animation | Framer Motion |
-| Icons | Lucide React |
-| Routing | React Router DOM |
-| Database | PostgreSQL |
-| Backend Platform | Supabase |
-| Realtime | Supabase Realtime |
-| Storage | Supabase Storage |
-| Authentication | Supabase Auth |
-| Version Control | Git |
-| Repository | GitHub |
-| Deployment | Vercel |
-
----
-
-# 🤝 Contributing
-
-Contributions are welcome.
-
-Recommended process:
-
-```bash
-git clone https://github.com/your-username/class-portfolio.git
-
-git checkout -b feature/new-feature
-
+rm -rf node_modules
 npm install
 
+Pada Windows PowerShell:
+
+Remove-Item -Recurse -Force node_modules
+npm install
+
+Supabase tidak terkoneksi
+
+Periksa:
+
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+
+Pastikan nama variable sesuai dengan kode:
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+Restart development server setelah mengubah .env:
+
 npm run dev
-```
 
-After development:
+Refresh halaman menghasilkan 404 di Vercel
 
-```bash
+Pastikan konfigurasi SPA rewrite tersedia:
+
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+
+Upload Storage gagal
+
+Periksa:
+
+Nama bucket.
+
+Bucket policy.
+
+Authentication.
+
+File size.
+
+MIME type.
+
+Supabase Storage configuration.
+
+Realtime tidak berjalan
+
+Periksa:
+
+Table sudah dikonfigurasi untuk realtime.
+
+Nama table benar.
+
+Schema benar.
+
+Subscription berhasil.
+
+RLS/policy tidak memblokir akses.
+
+Channel tidak dibuat berkali-kali.
+
+📊 Performance Checklist
+
+Sebelum production:
+
+[ ] Compress large images
+[ ] Use WebP/AVIF when appropriate
+[ ] Lazy load images
+[ ] Lazy load heavy components
+[ ] Avoid unnecessary realtime subscriptions
+[ ] Cleanup subscriptions
+[ ] Minimize unnecessary re-renders
+[ ] Test mobile performance
+[ ] Test production build
+
+Untuk gallery dengan banyak media, jangan memuat semua file resolusi penuh sekaligus.
+
+🤝 Contribution
+
+Jika project ini dikembangkan bersama:
+
+1. Fork / Clone
+
+git clone https://github.com/mubaraqmkbs13/class-portfolio.git
+
+2. Buat branch
+
+git checkout -b feature/nama-feature
+
+3. Commit
+
 git add .
-git commit -m "feat: add new feature"
-git push origin feature/new-feature
-```
+git commit -m "feat: add nama feature"
 
-Then open a Pull Request on GitHub.
+4. Push
 
----
+git push origin feature/nama-feature
 
-# 📜 License
+5. Pull Request
 
-This project is intended to be distributed under the **MIT License**.
+Buat Pull Request ke branch utama.
 
-If the repository contains a `LICENSE` file, make sure its contents match the license stated here.
+📝 Commit Convention
 
----
+Gunakan format sederhana:
 
-# ⭐ Acknowledgements
+feat: fitur baru
+fix: perbaikan bug
+docs: dokumentasi
+style: perubahan styling
+refactor: refactor kode
+perf: optimasi performa
+chore: konfigurasi/dependency
 
-Built with:
+Contoh:
 
-- React
-- Vite
-- Tailwind CSS
-- Framer Motion
-- Lucide
-- React Router
-- Supabase
-- PostgreSQL
-- Vercel
+git commit -m "feat: add realtime gallery"
+git commit -m "fix: resolve image upload issue"
+git commit -m "docs: update installation guide"
 
----
+🌐 Demo
+
+Ganti URL berikut dengan URL deployment Vercel project.
+
+Live Demo: https://your-project.vercel.app
+
+Repository: https://github.com/mubaraqmkbs13/class-portfolio
+
+👨‍💻 Author
+
+Mubaraq Mkbs
+
+GitHub:
+
+https://github.com/mubaraqmkbs13
+
+📄 License
+
+Project ini dapat menggunakan lisensi sesuai kebutuhan project.
+
+Jika project akan dipublikasikan sebagai open source, tambahkan file:
+
+LICENSE
+
+Contoh pilihan:
+
+MIT
+
+Apache-2.0
+
+GPL-3.0
+
+⭐ Support
+
+Jika project ini membantu atau menarik untuk dikembangkan:
+
+⭐ Star repository
+🍴 Fork repository
+🐛 Report issue
+💡 Submit feature request
 
 <div align="center">
 
-## 🎓 Built to Preserve the Journey
+🎓 Built to preserve memories, projects, and stories.
 
-**A class is not only a list of names.**
-
-**It is a collection of people, projects, places, stories, mistakes, achievements, and memories.**
-
-This project turns those moments into a digital archive that can be revisited.
-
-<br/>
-
-### 📸 Capture the Moment · 📖 Tell the Story · 🚀 Preserve the Journey
-
-<br/>
-
-**Made with React + Supabase**
+Class Portfolio & Digital Diary
 
 </div>
