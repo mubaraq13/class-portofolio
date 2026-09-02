@@ -38,23 +38,25 @@ Jika kamu ingin mengembangkan atau menjalankan project ini di komputer lokal, ik
 ```bash
 git clone [https://github.com/mubaraqmkbs13/class-portfolio.git](https://github.com/mubaraqmkbs13/class-portfolio.git)
 cd class-portfolio
-2. Install Dependencies
-Pastikan Node.js sudah terinstal, lalu jalankan:
 
+**2.Install Dependencies**
+Pastikan Node.js sudah terinstal, lalu jalankan:
 Bash
 npm install
-3. Konfigurasi Environment Variables
+
+**###3. Konfigurasi Environment Variables###**
 Buat file bernama .env di folder paling luar (root), lalu masukkan kredensial Supabase kamu:
 
 Cuplikan kode
 VITE_SUPABASE_URL=url_project_supabase_kamu
 VITE_SUPABASE_ANON_KEY=anon_key_supabase_kamu
-4. Jalankan Aplikasi
+
+**4. Jalankan Aplikasi**
 Bash
 npm run dev
 Buka http://localhost:5173 di browser kamu.
 
-🗄️ Konfigurasi Supabase (Database & Storage)
+**🗄️ Konfigurasi Supabase (Database & Storage)**
 Aplikasi ini sangat bergantung pada Supabase. Pastikan kamu telah membuat struktur berikut di Supabase Dashboard:
 
 A. Tabel Database
